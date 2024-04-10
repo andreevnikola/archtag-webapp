@@ -2,7 +2,7 @@ import { FileRoute, lazyFn, lazyRouteComponent } from "@tanstack/react-router"
 
 import { Route as rootRoute } from "./routes/__root"
 import { Route as SearchImport } from "./routes/search"
-import { Route as IndexImport } from "./routes/index"
+import { Route as IndexImport } from "./routes"
 import { Route as MoviesMovieIdImport } from "./routes/movies/$movieId"
 import { Route as SearchIndexImport } from "./routes/search.index"
 

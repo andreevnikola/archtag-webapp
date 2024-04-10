@@ -36,7 +36,7 @@ function IndexComponent() {
         <div className="flex gap-1 text-xl font-bold justify-end">
           {new Array(pages).fill(0).map((_, i) =>
             page === i + 1 ? (
-              <div className="px-4 py-2 border border-gray-300 rounded bg-indigo-800 text-white">
+              <div key={i} className="px-4 py-2 border border-gray-300 rounded bg-indigo-800 text-white">
                 {i + 1}
               </div>
             ) : (

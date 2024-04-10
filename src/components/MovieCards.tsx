@@ -4,7 +4,7 @@ import * as React from "react";
 export default function IndexComponent({ movies }: { movies: any[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
-      {movies.map((m, i) => (
+      {movies?.map((m, i) => (
         <Link
           to="/movies/$movieId"
           params={{
