@@ -78,21 +78,21 @@ export function Header() {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link to="/dashboard">
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <div className={navigationMenuTriggerStyle()}>
                   <FontAwesomeIcon
                     icon={faBarsProgress}
                     className="h-3 mr-1.5"
                   />{" "}
                   Табло за мениджмънт
-                </NavigationMenuLink>
+                </div>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link to="/company">
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <div className={navigationMenuTriggerStyle()}>
                   <FontAwesomeIcon icon={faGear} className="h-3 mr-1.5" />{" "}
                   Настройки
-                </NavigationMenuLink>
+                </div>
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
