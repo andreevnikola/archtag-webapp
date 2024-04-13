@@ -24,6 +24,8 @@
       --destructive-foreground: 232, 232, 230;
       --border: 230, 228, 232;
       --input: 230, 228, 232;
+      --success: 33, 204, 138;
+      --success-foreground: 24, 24, 26;
       --ring: 9, 11, 10;
       --radius: 0.3rem;
     }
@@ -47,6 +49,8 @@
       --destructive-foreground: 232, 232, 230;
       --border: 38, 39, 41;
       --input: 38, 39, 41;
+      --success: 33, 204, 138;
+      --success-foreground: 232, 232, 230;
       --ring: 232, 232, 230;
     }
   }

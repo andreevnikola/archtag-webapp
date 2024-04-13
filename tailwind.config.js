@@ -59,6 +59,15 @@ module.exports = {
             80: "rgba(var(--muted), 0.8)",
           },
         },
+        success: {
+          DEFAULT: "rgb(var(--success))",
+          foreground: "rgb(var(--success-foreground))",
+          transparent: {
+            30: "rgba(var(--success), 0.3)",
+            50: "rgba(var(--success), 0.5)",
+            80: "rgba(var(--success), 0.8)",
+          },
+        },
         accent: {
           DEFAULT: "rgb(var(--accent))",
           foreground: "rgb(var(--accent-foreground))",
