@@ -30,7 +30,7 @@ export function Header() {
     <>
       <NavigationMenu>
         <div className="w-full flex flex-grow justify-center p-0">
-          <NavigationMenuList className="flex max-[630px]:hidden">
+          <NavigationMenuList className="flex max-[650px]:hidden">
             <NavigationMenuItem>
               <NavigationMenuTrigger className="flex flex-row gap-1.5 items-center">
                 <FontAwesomeIcon icon={faInfoCircle} className="h-3" />{" "}
@@ -41,7 +41,7 @@ export function Header() {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted-transparent-50 to-muted p-6 no-underline outline-none focus:shadow-md"
                         href={import.meta.env.VITE_PROMOTIONAL_WEBSITE_URL}
                       >
                         <img
@@ -51,31 +51,28 @@ export function Header() {
                         <div className="mb-2 mt-4 text-lg font-medium">
                           ArchTag
                         </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
+                        <p className="text-sm leading-tight text-primary-transparent-50">
                           Модернизираме и реновираме строителния бранш.
                         </p>
                       </a>
                     </NavigationMenuLink>
                   </li>
-                  <ListItem
-                    href={getPromotionalWebsiteUrl("/us")}
-                    title="За нас"
-                  >
-                    Кои сме ние? Какво предлагаме? Защо да избереш нас?
-                  </ListItem>
-                  <ListItem
-                    href={getPromotionalWebsiteUrl("/pricing")}
-                    title="Ценоразпис"
-                  >
-                    Разгледай различните ни планове и избери правилния за теб!
-                  </ListItem>
-                  <ListItem
-                    href={getPromotionalWebsiteUrl("/partners")}
-                    title="Партньори"
-                  >
-                    Разгледай партниращите ни компании и се увери в стандартите
-                    ни!
-                  </ListItem>
+                  <a href={getPromotionalWebsiteUrl("/us")}>
+                    <ListItem title="За нас">
+                      Кои сме ние? Какво предлагаме? Защо да избереш нас?
+                    </ListItem>
+                  </a>
+                  <a href={getPromotionalWebsiteUrl("/pricing")}>
+                    <ListItem title="Ценоразпис">
+                      Разгледай различните ни планове и избери правилния за теб!
+                    </ListItem>
+                  </a>
+                  <a href={getPromotionalWebsiteUrl("/partners")}>
+                    <ListItem title="Партньори">
+                      Разгледай партниращите ни компании и се увери в
+                      стандартите ни!
+                    </ListItem>
+                  </a>
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
@@ -99,11 +96,11 @@ export function Header() {
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
-          <div className="hidden gap-3 max-[630px]:flex justify-start min-w-full -ml-3">
+          <div className="hidden gap-3 max-[650px]:flex justify-start min-w-full -ml-3">
             <HamburgerMenu />
 
             <div className="flex justify-center w-full">
-              <Link to="/dashboard" className="flex gap-2 items-center">
+              <Link to="/" className="flex gap-2 items-center">
                 <img
                   src={getThemeRelatedAssetUrl("brand/logo.png")}
                   className="h-7 w-7"
@@ -134,19 +131,17 @@ export const ListItem = React.forwardRef<
   return (
     <li>
       <NavigationMenuLink asChild>
-        <a
-          ref={ref}
+        <div
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary-transparent-30 focus:text-primary-foreground focus:bg-primary-transparent-50",
             className
           )}
-          {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <p className="line-clamp-2 text-sm leading-snug text-destructive">
             {children}
           </p>
-        </a>
+        </div>
       </NavigationMenuLink>
     </li>
   );
