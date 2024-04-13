@@ -4,6 +4,7 @@ import { routeTree } from "./routeTree.gen";
 const router = createRouter({
   routeTree,
   defaultPendingComponent: () => <>Pending...</>,
+  defaultNotFoundComponent: () => <>This page was not found!</>,
 });
 
 declare module "@tanstack/react-router" {
