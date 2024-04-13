@@ -30,7 +30,7 @@ export function Header() {
     <>
       <NavigationMenu>
         <div className="w-full flex flex-grow justify-center p-0">
-          <NavigationMenuList className="flex max-[650px]:hidden">
+          <NavigationMenuList className="flex max-[650px]:hidden gap-0.5">
             <NavigationMenuItem>
               <NavigationMenuTrigger className="flex flex-row gap-1.5 items-center">
                 <FontAwesomeIcon icon={faInfoCircle} className="h-3" />{" "}
@@ -41,7 +41,7 @@ export function Header() {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted-transparent-50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted-transparent-30 to-muted-transparent-50 p-6 no-underline outline-none focus:shadow-md"
                         href={import.meta.env.VITE_PROMOTIONAL_WEBSITE_URL}
                       >
                         <img
@@ -138,7 +138,7 @@ export const ListItem = React.forwardRef<
           )}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-destructive">
+          <p className="line-clamp-2 text-sm leading-snug text-muted">
             {children}
           </p>
         </div>

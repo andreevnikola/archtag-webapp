@@ -16,9 +16,9 @@
       --primary-foreground: 232, 232, 230;
       --secondary: 42, 213, 210;
       --secondary-foreground: 24, 24, 26;
-      --muted: 244, 242, 248;
+      --muted: 104, 100, 115;
       --muted-foreground: 111, 110, 130;
-      --accent: 189, 191, 54;
+      --accent: 209, 214, 255;
       --accent-foreground: 24, 24, 26;
       --destructive: 153, 51, 51;
       --destructive-foreground: 232, 232, 230;
@@ -39,9 +39,9 @@
       --primary-foreground: 24, 24, 26;
       --secondary: 44, 213, 209;
       --secondary-foreground: 232, 232, 230;
-      --muted: 77, 69, 94;
+      --muted: 135, 131, 145;
       --muted-foreground: 63, 61, 82;
-      --accent: 200, 202, 65;
+      --accent: 158, 186, 243;
       --accent-foreground: 24, 24, 26;
       --destructive: 191, 52, 52;
       --destructive-foreground: 232, 232, 230;
