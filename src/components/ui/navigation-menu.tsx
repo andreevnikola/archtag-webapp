@@ -13,7 +13,7 @@ const NavigationMenu = React.forwardRef<
     <NavigationMenuPrimitive.Root
       ref={ref}
       className={cn(
-        "relative z-10 backdrop-blur-md w-full max-w-4xl backdrop-brightness-95 border border-accent py-1.5 px-7 rounded-full flex items-center gap-4",
+        "relative z-10 backdrop-blur-md w-full max-w-4xl backdrop-brightness-95 dark:backdrop-brightness-150 border border-accent py-1.5 px-7 rounded-full flex items-center gap-4",
         className
       )}
       {...props}

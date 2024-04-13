@@ -11,18 +11,15 @@ import {
 import {
   faBarsProgress,
   faBuilding,
-  faChevronDown,
   faGear,
   faHandshake,
   faInfoCircle,
   faSort,
   faTags,
-  faTimes,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "@tanstack/react-router";
-import logo from "@/assets/logo.png";
 
 import {
   Collapsible,
@@ -30,8 +27,11 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { getPromotionalWebsiteUrl } from "@/lib/utils";
+import { useThemeRelatedAssetUrl } from "@/lib/hooks/useThemeRelatedAsset";
 
 export function HamburgerMenu() {
+  const getThemeRelatedAssetUrl = useThemeRelatedAssetUrl();
+
   return (
     <div className="flex">
       <Drawer>
@@ -57,7 +57,10 @@ export function HamburgerMenu() {
           <DrawerHeader>
             <DrawerTitle className="font-bold flex w-full justify-center">
               <Link to="/dashboard" className="flex gap-2 items-center">
-                <img src={logo} className="h-7 w-7" />
+                <img
+                  src={getThemeRelatedAssetUrl("brand/logo.png")}
+                  className="h-7 w-7"
+                />
                 <p className="text-2xl font-bold text-primary">ArchTag</p>
               </Link>
             </DrawerTitle>

@@ -18,12 +18,13 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-import logo from "@/assets/logo.png";
 import { UserProfileButton } from "./UserProfileButton";
 import { HamburgerMenu } from "./HamburgerMenu";
+import { ModeToggle } from "../theme-picker/mode-toggle";
+import { useThemeRelatedAssetUrl } from "@/lib/hooks/useThemeRelatedAsset";
 
 export function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const getThemeRelatedAssetUrl = useThemeRelatedAssetUrl();
 
   return (
     <>
@@ -43,7 +44,10 @@ export function Header() {
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                         href={import.meta.env.VITE_PROMOTIONAL_WEBSITE_URL}
                       >
-                        <img src={logo} className="h-6 w-6" />
+                        <img
+                          src={getThemeRelatedAssetUrl("brand/logo.png")}
+                          className="h-6 w-6"
+                        />
                         <div className="mb-2 mt-4 text-lg font-medium">
                           ArchTag
                         </div>
@@ -96,21 +100,27 @@ export function Header() {
             </NavigationMenuItem>
           </NavigationMenuList>
           <div className="hidden gap-3 max-[630px]:flex justify-start min-w-full -ml-3">
-            <div className="relative" onClick={() => setIsMobileMenuOpen(true)}>
-              <HamburgerMenu />
-            </div>
+            <HamburgerMenu />
 
             <div className="flex justify-center w-full">
               <Link to="/dashboard" className="flex gap-2 items-center">
-                <img src={logo} className="h-7 w-7" />
+                <img
+                  src={getThemeRelatedAssetUrl("brand/logo.png")}
+                  className="h-7 w-7"
+                />
                 <p className="text-2xl font-bold text-primary">ArchTag</p>
               </Link>
             </div>
           </div>
         </div>
-        <NavigationMenuList>
-          <UserProfileButton />
-        </NavigationMenuList>
+        <div className="flex items-center gap-2">
+          <NavigationMenuList>
+            <ModeToggle />
+          </NavigationMenuList>
+          <NavigationMenuList>
+            <UserProfileButton />
+          </NavigationMenuList>
+        </div>
       </NavigationMenu>
       <div className="h-20" />
     </>
