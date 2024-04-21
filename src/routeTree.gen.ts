@@ -11,42 +11,72 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AuthenticationImport } from './routes/_authentication'
+import { Route as AuthImport } from './routes/auth'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
-import { Route as AuthenticationSigninImport } from './routes/_authentication/signin'
+import { Route as AuthAuthenticateImport } from './routes/auth/_authenticate'
+import { Route as AuthAuthenticateSigninImport } from './routes/auth/_authenticate/signin'
+import { Route as AuthAuthenticateRegisterImport } from './routes/auth/_authenticate/register'
 
 // Create/Update Routes
 
-const AuthenticationRoute = AuthenticationImport.update({
-  id: '/_authentication',
+const AuthRoute = AuthImport.update({
+  path: '/auth',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
 const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const AuthenticationSigninRoute = AuthenticationSigninImport.update({
+const AuthAuthenticateRoute = AuthAuthenticateImport.update({
+  id: '/_authenticate',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthAuthenticateSigninRoute = AuthAuthenticateSigninImport.update({
   path: '/signin',
-  getParentRoute: () => AuthenticationRoute,
+  getParentRoute: () => AuthAuthenticateRoute,
+} as any)
+
+const AuthAuthenticateRegisterRoute = AuthAuthenticateRegisterImport.update({
+  path: '/register',
+  getParentRoute: () => AuthAuthenticateRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_authentication': {
-      preLoaderRoute: typeof AuthenticationImport
+    '/_authenticated': {
+      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
-    '/_authentication/signin': {
-      preLoaderRoute: typeof AuthenticationSigninImport
-      parentRoute: typeof AuthenticationImport
+    '/auth': {
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/_authenticate': {
+      preLoaderRoute: typeof AuthAuthenticateImport
+      parentRoute: typeof AuthImport
     }
     '/_authenticated/': {
       preLoaderRoute: typeof AuthenticatedIndexImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/auth/_authenticate/register': {
+      preLoaderRoute: typeof AuthAuthenticateRegisterImport
+      parentRoute: typeof AuthAuthenticateImport
+    }
+    '/auth/_authenticate/signin': {
+      preLoaderRoute: typeof AuthAuthenticateSigninImport
+      parentRoute: typeof AuthAuthenticateImport
     }
   }
 }
@@ -54,8 +84,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
-  AuthenticationRoute.addChildren([AuthenticationSigninRoute]),
-  AuthenticatedIndexRoute,
+  AuthenticatedRoute.addChildren([AuthenticatedIndexRoute]),
+  AuthRoute.addChildren([
+    AuthAuthenticateRoute.addChildren([
+      AuthAuthenticateRegisterRoute,
+      AuthAuthenticateSigninRoute,
+    ]),
+  ]),
 ])
 
 /* prettier-ignore-end */

@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      minHeight: {
+        "reasonably-tall": "calc(100vh - 64px)",
+      },
       colors: {
         border: "rgb(var(--border))",
         input: "rgb(var(--input))",
@@ -30,6 +33,7 @@ module.exports = {
             30: "rgba(var(--primary), 0.3)",
             50: "rgba(var(--primary), 0.5)",
             80: "rgba(var(--primary), 0.8)",
+            90: "rgba(var(--primary), 0.9)",
           },
         },
         secondary: {
