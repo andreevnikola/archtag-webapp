@@ -77,8 +77,6 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState(new Map<string, string>());
 
-  console.log(errors);
-
   const addError = (instanceName: string) =>
     setErrors((map) => {
       const newMap = new Map(map);
@@ -100,16 +98,10 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
     const formData = new FormData(e.target as HTMLFormElement);
     let data: any = {};
     props.fields.forEach((field) => {
-      if (data === null) return;
       if (field.hasOwnProperty("fields")) {
         (field as FieldGroup).fields.forEach((subField) => {
           const value = formData.get(subField.name);
           if (value) {
-            if (subField.validation && !subField.validation(value)) {
-              data = null;
-              return;
-            }
-
             data[subField.name] = subField.transform
               ? subField.transform(value)
               : value;
@@ -119,21 +111,17 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
         field = field as Field;
         const value = formData.get(field.name);
         if (value) {
-          if (field.validation && !field.validation(value)) {
-            data = null;
-            return;
-          }
           data[field.name] = field.transform ? field.transform(value) : value;
         }
       }
     });
-    props.onSubmit(data satisfies ReturnType);
+    props.onSubmit(Object.keys(data).length === 0 ? null : data);
   };
 
   return (
     <form
       onSubmit={(e: FormEvent) => handleSubmit(e)}
-      className="flex flex-col gap-3 items-center justify-center w-full p-2"
+      className="flex flex-col gap-4 items-center justify-center w-full p-2"
     >
       {props.title && (
         <h1 className="scroll-m-20 text-3xl font-bold tracking-tight lg:text-4xl">
@@ -173,13 +161,13 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
         );
       })}
 
-      <div className="h-2"></div>
+      <div className="-mt-2"></div>
       <CustomFormButton
         isDisabled={errors.size > 0}
         btnType={props.submitButtonType}
         btn={props.submitButton}
       />
-      <div className="flex -mt-3 gap-1">
+      <div className="flex -mt-4 gap-1">
         {props.links &&
           props.links.map((link) => (
             <Link to={link.href} key={link.href}>

@@ -62,7 +62,7 @@ const registerFormFields: Array<Field | FieldGroup> = [
 ];
 
 function SignInPage() {
-  const handleSubmit = (data: IRegisterForm) => {
+  const handleSubmit = (data: IRegisterForm | null) => {
     console.log(data);
   };
 
@@ -72,7 +72,7 @@ function SignInPage() {
         Регистрация
       </h1>
 
-      <CustomForm
+      <CustomForm<IRegisterForm>
         onSubmit={handleSubmit}
         fields={registerFormFields}
         submitButtonType={ButtonCustomizationType.CUSTOM_TEXT_AND_ICON}
