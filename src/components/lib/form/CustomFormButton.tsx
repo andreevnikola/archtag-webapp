@@ -6,15 +6,18 @@ import {
   ICustomTextAndIconSubmitButton,
 } from "./CustomForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 export default function CustomFormButton({
   btn,
   btnType,
   isDisabled,
+  isLoading,
 }: {
   btn: CustomButton;
   btnType: ButtonCustomizationType;
   isDisabled: boolean;
+  isLoading: boolean;
 }) {
   if (btnType === ButtonCustomizationType.CUSTOM_BUTTON)
     return (btn as ICustomButton).element;
@@ -22,7 +25,7 @@ export default function CustomFormButton({
     const { icon, text, variant, size } = btn as ICustomTextAndIconSubmitButton;
     return (
       <Button
-        disabled={isDisabled}
+        disabled={isDisabled || isLoading}
         variant={variant}
         className={
           size === "sm" || !size
@@ -33,14 +36,24 @@ export default function CustomFormButton({
         }
       >
         <FontAwesomeIcon icon={icon} />
-        <div className="flex justify-center w-full">{text}</div>
+        <div className="flex justify-center w-full items-center">
+          {isLoading && (
+            <ReloadIcon className="mr-2 h-3.5 w-3.5 animate-spin" />
+          )}
+          {text}
+        </div>
       </Button>
     );
   }
   if (btnType === ButtonCustomizationType.CUSTOM_TEXT) {
     const { text, variant } = btn as ICustomTextAndIconSubmitButton;
     return (
-      <Button disabled={isDisabled} variant={variant} type="submit">
+      <Button
+        disabled={isDisabled || isLoading}
+        variant={variant}
+        type="submit"
+      >
+        {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
         {text}
       </Button>
     );

@@ -31,10 +31,10 @@ export function Messages() {
       <AnimatePresence>
         {messages.map((msg, i) => (
           <motion.span
-            initial={{ left: 100, opacity: 0, scale: 0.8 }}
-            animate={{ left: 0, opacity: 1, scale: 1 }}
+            initial={{ left: 100, opacity: 0, scale: 0.95, scaleX: 0.85 }}
+            animate={{ left: 0, opacity: 1, scale: 1, scaleX: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.3, ease: "linear" }}
+            transition={{ duration: 0.15, ease: "linear" }}
             className="relative"
             key={i}
           >
@@ -42,10 +42,10 @@ export function Messages() {
               variant={"default"}
               className={
                 msg.type === "error"
-                  ? "border-destructive bg-destructive-transparent-30"
+                  ? "border-destructive bg-destructive-transparent-50"
                   : msg.type === "success"
-                    ? "border-success bg-success-transparent-30"
-                    : "border-primary bg-muted-transparent-30"
+                    ? "border-success bg-success-transparent-50"
+                    : "border-primary bg-muted-transparent-50"
               }
             >
               <FontAwesomeIcon

@@ -63,7 +63,7 @@ export interface FieldGroup {
 }
 
 interface CustomFormProps<ReturnType> {
-  onSubmit: (data: ReturnType | null) => void;
+  onSubmit: (data: ReturnType) => void;
   title?: string;
   submitButtonType: ButtonCustomizationType;
   submitButton: CustomButton;
@@ -71,6 +71,7 @@ interface CustomFormProps<ReturnType> {
   links?: ILink[];
   belowButtonContent?: JSX.Element;
   fields: Array<Field | FieldGroup>;
+  isLoading: boolean;
 }
 
 export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
@@ -115,7 +116,8 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
         }
       }
     });
-    props.onSubmit(Object.keys(data).length === 0 ? null : data);
+
+    if (Object.keys(data).length !== 0) props.onSubmit(data);
   };
 
   return (
@@ -164,13 +166,14 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
       <div className="-mt-2"></div>
       <CustomFormButton
         isDisabled={errors.size > 0}
+        isLoading={props.isLoading}
         btnType={props.submitButtonType}
         btn={props.submitButton}
       />
-      <div className="flex -mt-4 gap-1">
+      <div className="flex gap-0 max-sm:flex-col -mt-1 flex-row justify-center items-center">
         {props.links &&
           props.links.map((link) => (
-            <Link to={link.href} key={link.href}>
+            <Link to={link.href} className="-mt-2" key={link.href}>
               <Button variant={"link"} key={link.text}>
                 {link.text}
               </Button>

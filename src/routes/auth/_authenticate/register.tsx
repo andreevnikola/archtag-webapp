@@ -62,7 +62,7 @@ const registerFormFields: Array<Field | FieldGroup> = [
 ];
 
 function SignInPage() {
-  const handleSubmit = (data: IRegisterForm | null) => {
+  const handleSubmit = (data: IRegisterForm) => {
     console.log(data);
   };
 
@@ -83,7 +83,7 @@ function SignInPage() {
         }}
         links={[
           {
-            text: "Нямаш акаунт? Впиши се!",
+            text: "Имаш акаунт? Впиши се!",
             href: "/auth/signin",
           },
         ]}
