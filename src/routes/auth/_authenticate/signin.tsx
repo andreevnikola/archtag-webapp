@@ -4,13 +4,25 @@ import {
   Field,
   FieldGroup,
 } from "@/components/lib/form/CustomForm";
+import { authenticate } from "@/lib/authenticationUtils";
 import { useRequestr } from "@/lib/hooks/requestr-hook";
 import { Request } from "@/lib/requestr";
+import { useAuthenticationStore } from "@/stores/AuthenticationStore";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/auth/_authenticate/signin")({
   component: SignInPage,
+  validateSearch: (
+    search: any
+  ): {
+    from?: string;
+  } => {
+    return {
+      from: search && search.from && search.from !== "" ? search.from : "/",
+    };
+  },
 });
 
 interface ISignInForm {
@@ -51,6 +63,10 @@ interface SignInResponse {
 }
 
 function SignInPage() {
+  const { from } = Route.useSearch();
+
+  const navigate = useNavigate();
+
   const { send, res, isLoading, error } = Request.builder<
     SignInRequest,
     SignInResponse
@@ -63,6 +79,18 @@ function SignInPage() {
   const handleSubmit = async (data: ISignInForm) => {
     send(data);
   };
+
+  useEffect(() => {
+    if (res) {
+      (async () => {
+        await authenticate(res.token, res.refreshToken);
+        console.log("shall redirect to: ", from || "/");
+        navigate({
+          to: from || "/",
+        });
+      })();
+    }
+  }, [res]);
 
   return (
     <div className="flex flex-col justify-center items-center gap-6 w-full">

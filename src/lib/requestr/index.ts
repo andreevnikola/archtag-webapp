@@ -1,5 +1,6 @@
 import { apiUrl } from "../config";
 import { useRequestr } from "../hooks/requestr-hook";
+import consoleErrorHandler from "./error-handlers/consoleErrorHandler";
 import notificationErrorHandler from "./error-handlers/notificationErrorHandler";
 
 export type RestMethods = "GET" | "POST" | "PUT" | "DELETE";
@@ -36,7 +37,7 @@ export class Request<Body, Ret> {
   url: string;
   method: RestMethods;
   headers: Headers;
-  body: string;
+  body: string | undefined;
   retries: number;
   errorHandler: (error: ReqError) => void;
 
@@ -64,13 +65,25 @@ export class Request<Body, Ret> {
     this.headers = headers || {
       "Content-Type": "application/json",
     };
-    this.body = body || "";
-    this.retries = retries || 2;
-    this.errorHandler = errorHandler || notificationErrorHandler;
+    this.body = body || undefined;
+    this.retries = retries || 3;
+    this.errorHandler = errorHandler || consoleErrorHandler;
   }
 
-  async setBody(body: Body): Promise<Request<Body, Ret>> {
+  setBody(body: Body): Request<Body, Ret> {
     this.body = JSON.stringify(body);
+    return this;
+  }
+
+  setParam(paramWildCard: string, value: string): Request<Body, Ret> {
+    this.url = this.url.replace(`:${paramWildCard}`, value);
+    return this;
+  }
+
+  setParams(params: Map<string, string>): Request<Body, Ret> {
+    for (const [key, value] of params) {
+      this.setParam(key, value);
+    }
     return this;
   }
 
@@ -125,6 +138,11 @@ export class RequestBuilder<Body, Ret> {
       retries: undefined,
       errorHandler: undefined,
     });
+  }
+
+  retries(retries: number): RequestBuilder<Body, Ret> {
+    this.request.retries = retries;
+    return this;
   }
 
   body(body: Body): RequestBuilder<Body, Ret> {

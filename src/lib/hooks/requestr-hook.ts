@@ -8,10 +8,15 @@ export function useRequestr<Body, Ret>(req: Request<Body, Ret>) {
   const [error, setError] = useState<ReqError | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const send = async (body: Body) => {
+  const send = async (
+    body: Body,
+    wildCardToParmasMap?: Map<string, string>
+  ) => {
     setIsLoading(true);
 
     req.setBody(body);
+
+    if (wildCardToParmasMap) req.setParams(wildCardToParmasMap);
 
     const data = await req.send();
     setIsLoading(false);

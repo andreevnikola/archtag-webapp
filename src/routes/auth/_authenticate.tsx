@@ -13,7 +13,7 @@ export const Route = createFileRoute("/auth/_authenticate")({
 function AuthenticateLayout() {
   const router = useRouterState();
   return (
-    <div className="w-full min-h-reasonably-tall flex justify-center items-center gap-1 flex-col p-3">
+    <div className="w-full min-h-reasonably-tall flex justify-center items-center gap-1 flex-col p-6 max-sm:p-3">
       <div className="p-2 gap-2 flex flex-row">
         <Link to="/auth/signin">
           <Button
