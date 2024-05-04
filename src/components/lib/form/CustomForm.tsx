@@ -5,6 +5,7 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { Button } from "@/components/ui/button";
 import { ErrorComponent, Link } from "@tanstack/react-router";
 import CustomInputField from "./CustomInputField";
+import { error } from "console";
 
 export enum ButtonCustomizationType {
   CUSTOM_TEXT = "CUSTOM_TEXT",
@@ -122,7 +123,13 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
 
   return (
     <form
-      onSubmit={(e: FormEvent) => handleSubmit(e)}
+      onSubmit={(e: FormEvent) => {
+        if (errors.size < 1) handleSubmit(e);
+        else {
+          e.preventDefault();
+          setIsSubmitted(true);
+        }
+      }}
       className="flex flex-col gap-4 items-center justify-center w-full p-2"
     >
       {props.title && (
@@ -165,7 +172,7 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
 
       <div className="-mt-2"></div>
       <CustomFormButton
-        isDisabled={errors.size > 0}
+        isDisabled={errors.size > 0 && isSubmitted}
         isLoading={props.isLoading}
         btnType={props.submitButtonType}
         btn={props.submitButton}

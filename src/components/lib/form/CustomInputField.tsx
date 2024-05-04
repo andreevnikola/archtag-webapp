@@ -22,16 +22,15 @@ export default function CustomInputField({
 
   useEffect(() => {
     const transformedValue = field.transform ? field.transform(value) : value;
-    if (
-      ((field.validation && !field.validation(transformedValue)) ||
-        isErrorForManditoryVisible) &&
-      isSubmitted
-    ) {
-      if (isValid) {
-        setIsValid(false);
-        addError(field.name);
-      }
-    } else if (!isValid) {
+    const isFieldWithCurrentInformationInvalid =
+      (field.validation && !field.validation(transformedValue)) ||
+      isErrorForManditoryVisible;
+    if (isFieldWithCurrentInformationInvalid && isValid) {
+      setIsValid(false);
+      addError(field.name);
+    }
+
+    if (!isFieldWithCurrentInformationInvalid && !isValid) {
       removeError(field.name);
       setIsValid(true);
     }
@@ -49,11 +48,11 @@ export default function CustomInputField({
         autoComplete={field.name}
         placeholder={field.placeholder}
       />
-      {!isValid && !isErrorForManditoryVisible && (
+      {!isValid && isSubmitted && !isErrorForManditoryVisible && (
         <p className="text-destructive -mt-1.5">{field.errorMessage}</p>
       )}
 
-      {isErrorForManditoryVisible && (
+      {isErrorForManditoryVisible && isSubmitted && (
         <p className="text-destructive -mt-1.5">Полето е задължително!</p>
       )}
     </div>
