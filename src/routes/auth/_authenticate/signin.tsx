@@ -77,11 +77,11 @@ function SignInPage() {
     .useRequestr();
 
   const handleSubmit = async (data: ISignInForm) => {
-    send(data);
+    send({ body: data });
   };
 
   useEffect(() => {
-    if (res) {
+    if (res && !error) {
       (async () => {
         await authenticate(res.token, res.refreshToken);
         console.log("shall redirect to: ", from || "/");

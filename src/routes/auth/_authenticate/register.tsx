@@ -5,7 +5,11 @@ import {
   FieldGroup,
 } from "@/components/lib/form/CustomForm";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+
+import { Request } from "@/lib/requestr";
+import { useEffect } from "react";
+import { authenticate } from "@/lib/authenticationUtils";
 
 export const Route = createFileRoute("/auth/_authenticate/register")({
   component: SignInPage,
@@ -63,8 +67,42 @@ const registerFormFields: Array<Field | FieldGroup> = [
 
 function SignInPage() {
   const handleSubmit = (data: IRegisterForm) => {
-    console.log(data);
+    send({
+      body: {
+        email: data.email,
+        firstname: data.firstName,
+        lastname: data.lastName,
+        password: data.password,
+      },
+    });
   };
+
+  const navigate = useNavigate();
+
+  const { send, res, isLoading, error } = Request.builder<
+    {
+      email: string;
+      firstname: string;
+      lastname: string;
+      password: string;
+    },
+    any
+  >()
+    .useNotificatonErrorHandler()
+    .method("POST")
+    .url("/auth/register")
+    .useRequestr();
+
+  useEffect(() => {
+    if (res && !error) {
+      (async () => {
+        await authenticate(res.token, res.refreshToken);
+        navigate({
+          to: "/",
+        });
+      })();
+    }
+  }, [res]);
 
   return (
     <div className="flex flex-col justify-center items-center gap-6 w-full">
@@ -87,6 +125,7 @@ function SignInPage() {
             href: "/auth/signin",
           },
         ]}
+        isLoading={isLoading}
       />
     </div>
   );
