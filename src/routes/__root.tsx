@@ -11,16 +11,16 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
-  const modal = ModalController.instanciate()
-    .setContent(<UnverifiedAccountModal />)
-    .setCanClose(false)
-    .useModal();
+  // const modal = ModalController.instanciate()
+  //   .setContent(<UnverifiedAccountModal />)
+  //   .setCanClose(false)
+  //   .useModal();
 
-  useEffect(() => {
-    setTimeout(() => {
-      modal.open();
-    }, 1000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     modal.open();
+  //   }, 1000);
+  // }, []);
 
   return (
     <div className="w-full p-0">
