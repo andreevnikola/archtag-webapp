@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 export function CustomModal() {
   const isOpen = useCustomModalStore((state) => state.isOpen);
   const content = useCustomModalStore((state) => state.content);
+  const canClose = useCustomModalStore((state) => state.canClose);
 
   const hasBeenOpened = useRef(false);
 
@@ -19,8 +20,12 @@ export function CustomModal() {
     }
   }, [isOpen]);
 
+  const manageOnFakeStateOfIsOpenedChange = (isFakeOpened: boolean) => {
+    if (!isFakeOpened && !canClose) triggerer.current!.click();
+  };
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={manageOnFakeStateOfIsOpenedChange}>
       <DialogTrigger ref={triggerer} className="hidden"></DialogTrigger>
       <DialogContent>{content}</DialogContent>
     </Dialog>
