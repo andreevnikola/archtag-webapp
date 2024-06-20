@@ -20,5 +20,5 @@ export const useCustomModalStore = create<CustomModal>((set) => ({
   onClose: () => {},
   setContent: (content: React.ReactNode) => set({ content }),
   open: () => set({ isOpen: true }),
-  close: () => set({ isOpen: false }),
+  close: () => set({ canClose: true, isOpen: false }),
 }));

@@ -4,5 +4,6 @@ export interface User {
   firstName: string;
   lastName: string;
   isBanned: boolean;
+  isEmailValidated?: boolean;
   role: "admin" | "user";
 }

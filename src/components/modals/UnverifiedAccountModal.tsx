@@ -4,28 +4,48 @@ import { CopyIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { DialogClose, DialogFooter, DialogHeader } from "../ui/dialog";
 import { Input } from "../ui/input";
+import { useUser } from "@/lib/hooks/useUser";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { signOut } from "@/lib/authenticationUtils";
+import { useNavigate } from "@tanstack/react-router";
+import { useCustomModalStore } from "@/stores/CustomModalStore";
 
 export function UnverifiedAccountModal() {
+  const user = useUser();
+  const navigate = useNavigate();
+  const hideModal = useCustomModalStore((state) => state.close);
+
+  const handleSignOut = () => {
+    signOut();
+    navigate({
+      to: "/auth/signin",
+    });
+    hideModal();
+  };
+
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Share link</DialogTitle>
-        <DialogDescription>
-          Anyone who has this link will be able to view this.
+        <FontAwesomeIcon icon={faEnvelope} size="6x" className="mb-2" />
+        <DialogTitle className="font-semibold text-center text-xl">
+          Акаунта Ви не е активиран
+        </DialogTitle>
+        <DialogDescription className="text-primary-transparent-80 text-justify">
+          За да активирате акаунта си, моля отворетре линка който сте получили
+          на посоченият от вас имейл адрес ({user.email}).
         </DialogDescription>
       </DialogHeader>
-      <div className="flex items-center space-x-2">
-        <div className="grid flex-1 gap-2">
-          <Label className="sr-only">Link</Label>
-          <Input
-            id="link"
-            defaultValue="https://ui.shadcn.com/docs/installation"
-            readOnly
-          />
-        </div>
-        <Button type="submit" size="sm" className="px-3">
-          <span className="sr-only">Copy</span>
-          <CopyIcon className="h-4 w-4" />
+      <div className="flex gap-2 flex-row max-sm:flex-col mt-2">
+        <Button variant={"outline"} className="w-full">
+          Препрати верификация
+        </Button>
+        <Button
+          onClick={() => handleSignOut()}
+          variant={"destructive"}
+          className="w-full"
+        >
+          Отпиши се
         </Button>
       </div>
     </>
