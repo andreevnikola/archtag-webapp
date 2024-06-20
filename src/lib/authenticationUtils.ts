@@ -3,6 +3,7 @@ import { Request, RequestBuilder } from "./requestr";
 import { User } from "@/types/user";
 import { useUserStore } from "@/stores/UserStore";
 import { redirect } from "@tanstack/react-router";
+import { ModalController } from "@/components/lib/modal/ModalController";
 
 export function isAuthenticated() {
   return (
@@ -20,7 +21,12 @@ export function signOut() {
     email: "",
     uuid: "",
     role: "user",
+    isEmailValidated: false,
   });
+}
+
+export function isEmailValidated() {
+  return useUserStore.getState().isEmailValidated;
 }
 
 export function isHavingRefreshToken() {

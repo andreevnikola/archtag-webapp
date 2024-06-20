@@ -15,6 +15,7 @@ export function useRequestr<Body, Ret>(req: Request<Body, Ret>) {
     body: Body;
     wildCardToParmasMap?: Map<string, string>;
   }) => {
+    console.log("sending request");
     setIsLoading(true);
 
     req.setBody(body);
@@ -28,6 +29,7 @@ export function useRequestr<Body, Ret>(req: Request<Body, Ret>) {
       setError(data.error);
     } else {
       setRes(data.res);
+      setError(null);
     }
 
     return data;

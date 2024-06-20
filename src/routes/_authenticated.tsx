@@ -1,6 +1,9 @@
+import { ModalController } from "@/components/lib/modal/ModalController";
+import { UnverifiedAccountModal } from "@/components/modals/UnverifiedAccountModal";
 import {
   authenticate,
   isAuthenticated,
+  isEmailValidated,
   isHavingRefreshToken,
   revalidateToken,
 } from "@/lib/authenticationUtils";
@@ -18,6 +21,13 @@ export const Route = createFileRoute("/_authenticated")({
             useAuthenticationStore.getState().token,
             useAuthenticationStore.getState().refreshToken
           );
+          console.log("revalidated");
+          if (!isEmailValidated()) {
+            ModalController.instanciate()
+              .setContent(<UnverifiedAccountModal />)
+              .setCanClose(false)
+              .show();
+          }
           return;
         }
       } catch (e) {
