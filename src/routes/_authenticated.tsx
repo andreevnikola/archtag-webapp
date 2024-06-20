@@ -21,7 +21,6 @@ export const Route = createFileRoute("/_authenticated")({
             useAuthenticationStore.getState().token,
             useAuthenticationStore.getState().refreshToken
           );
-          console.log("revalidated");
           if (!isEmailValidated()) {
             ModalController.instanciate()
               .setContent(<UnverifiedAccountModal />)
@@ -40,6 +39,13 @@ export const Route = createFileRoute("/_authenticated")({
           from: window.location.pathname,
         },
       });
+    }
+
+    if (!isEmailValidated()) {
+      ModalController.instanciate()
+        .setContent(<UnverifiedAccountModal />)
+        .setCanClose(false)
+        .show();
     }
   },
 });
