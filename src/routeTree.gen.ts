@@ -17,7 +17,9 @@ import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index
 import { Route as AuthAuthenticateImport } from './routes/auth/_authenticate'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthAuthenticateSigninImport } from './routes/auth/_authenticate/signin'
+import { Route as AuthAuthenticateResetPasswordImport } from './routes/auth/_authenticate/reset-password'
 import { Route as AuthAuthenticateRegisterImport } from './routes/auth/_authenticate/register'
+import { Route as AuthAuthenticateForgottenPasswordImport } from './routes/auth/_authenticate/forgotten-password'
 
 // Create/Update Routes
 
@@ -52,10 +54,22 @@ const AuthAuthenticateSigninRoute = AuthAuthenticateSigninImport.update({
   getParentRoute: () => AuthAuthenticateRoute,
 } as any)
 
+const AuthAuthenticateResetPasswordRoute =
+  AuthAuthenticateResetPasswordImport.update({
+    path: '/reset-password',
+    getParentRoute: () => AuthAuthenticateRoute,
+  } as any)
+
 const AuthAuthenticateRegisterRoute = AuthAuthenticateRegisterImport.update({
   path: '/register',
   getParentRoute: () => AuthAuthenticateRoute,
 } as any)
+
+const AuthAuthenticateForgottenPasswordRoute =
+  AuthAuthenticateForgottenPasswordImport.update({
+    path: '/forgotten-password',
+    getParentRoute: () => AuthAuthenticateRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -77,8 +91,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/auth/_authenticate/forgotten-password': {
+      preLoaderRoute: typeof AuthAuthenticateForgottenPasswordImport
+      parentRoute: typeof AuthAuthenticateImport
+    }
     '/auth/_authenticate/register': {
       preLoaderRoute: typeof AuthAuthenticateRegisterImport
+      parentRoute: typeof AuthAuthenticateImport
+    }
+    '/auth/_authenticate/reset-password': {
+      preLoaderRoute: typeof AuthAuthenticateResetPasswordImport
       parentRoute: typeof AuthAuthenticateImport
     }
     '/auth/_authenticate/signin': {
@@ -101,7 +123,9 @@ export const routeTree = rootRoute.addChildren([
   ]),
   AuthRoute.addChildren([
     AuthAuthenticateRoute.addChildren([
+      AuthAuthenticateForgottenPasswordRoute,
       AuthAuthenticateRegisterRoute,
+      AuthAuthenticateResetPasswordRoute,
       AuthAuthenticateSigninRoute,
     ]),
   ]),
