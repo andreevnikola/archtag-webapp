@@ -12,6 +12,6 @@ export const useUserStore = create<UserStore>((set) => ({
   email: "",
   uuid: "",
   role: "user",
-  isEmailValidated: false,
+  verified: false,
   setUser: (user: User) => set(user),
 }));

@@ -1,5 +1,5 @@
 import { useAuthenticationStore } from "@/stores/AuthenticationStore";
-import { Request, RequestBuilder } from "./requestr";
+import { Request } from "./requestr";
 import { User } from "@/types/user";
 import { useUserStore } from "@/stores/UserStore";
 import { redirect } from "@tanstack/react-router";
@@ -21,12 +21,12 @@ export function signOut() {
     email: "",
     uuid: "",
     role: "user",
-    isEmailValidated: false,
+    verified: false,
   });
 }
 
 export function isEmailValidated() {
-  return useUserStore.getState().isEmailValidated;
+  return useUserStore.getState().verified;
 }
 
 export function isHavingRefreshToken() {
@@ -34,8 +34,6 @@ export function isHavingRefreshToken() {
 }
 
 export async function updateUserData() {
-  // make a request to the server to get the user data
-
   const req = Request.builder<unknown, User>()
     .method("GET")
     .url("/auth/get-user-data/" + useAuthenticationStore.getState().token)
@@ -48,6 +46,7 @@ export async function updateUserData() {
   }
 
   useUserStore.getState().setUser(res!);
+  console.log("User data updated: ", res);
 }
 
 export async function authenticate(token: string, refreshToken: string) {
@@ -79,4 +78,5 @@ export async function revalidateToken() {
   }
 
   updateToken(res!.token);
+  await updateUserData();
 }

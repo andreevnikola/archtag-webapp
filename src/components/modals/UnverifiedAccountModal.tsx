@@ -11,7 +11,7 @@ import { useCustomModalStore } from "@/stores/CustomModalStore";
 import { useAuthenticationStore } from "@/stores/AuthenticationStore";
 import { Request } from "@/lib/requestr";
 
-const resendVerificationRequest = (token:any) =>
+const resendVerificationRequest = (token: string) =>
   Request.builder<{}, { success: boolean; message?: string }>()
     .useNotificatonErrorHandler()
     .method("GET")

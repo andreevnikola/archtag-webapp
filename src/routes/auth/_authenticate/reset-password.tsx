@@ -35,7 +35,7 @@ const resetPasswordFormFields: Array<Field | FieldGroup> = [
 ];
 
 interface ResetPasswordRequest {
-  token: string;
+  code: string;
   newPassword: string;
 }
 
@@ -45,7 +45,7 @@ interface ResetPasswordResponse {
 }
 
 function ResetPasswordPage() {
-  const { token } = Route.useSearch<{ token: string }>();
+  const { code } = Route.useSearch<{ code: string }>();
   const navigate = useNavigate();
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
 
@@ -60,7 +60,7 @@ function ResetPasswordPage() {
 
   const handleSubmit = async (data: IResetPasswordForm) => {
     const requestData: ResetPasswordRequest = {
-      token: token,
+      code: code,
       newPassword: data.newPassword,
     };
     send({ body: requestData });
