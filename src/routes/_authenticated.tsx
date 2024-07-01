@@ -12,15 +12,16 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayoutComponent,
-  beforeLoad: () => {
+  beforeLoad: async () => {
     if (!isAuthenticated()) {
       try {
         if (isHavingRefreshToken()) {
-          revalidateToken();
-          authenticate(
+          await revalidateToken();
+          await authenticate(
             useAuthenticationStore.getState().token,
             useAuthenticationStore.getState().refreshToken
           );
+
           if (!isEmailValidated()) {
             ModalController.instanciate()
               .setContent(<UnverifiedAccountModal />)

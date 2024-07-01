@@ -1,5 +1,5 @@
 import { ButtonTypes } from "@/lib/config";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import CustomFormButton from "./CustomFormButton";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { Button } from "@/components/ui/button";
@@ -73,11 +73,19 @@ interface CustomFormProps<ReturnType> {
   belowButtonContent?: JSX.Element;
   fields: Array<Field | FieldGroup>;
   isLoading: boolean;
+  initialData?: Partial<ReturnType>; // Add initialData prop
 }
 
 export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState(new Map<string, string>());
+  const [formData, setFormData] = useState<Partial<ReturnType>>({});
+
+  useEffect(() => {
+    if (props.initialData) {
+      setFormData(props.initialData);
+    }
+  }, [props.initialData]);
 
   const addError = (instanceName: string) =>
     setErrors((map) => {
@@ -92,33 +100,16 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
       return newMap;
     });
 
+  const handleChange = (name: string, value: any) => {
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (!isSubmitted) setIsSubmitted(true);
 
-    const formData = new FormData(e.target as HTMLFormElement);
-    let data: any = {};
-    props.fields.forEach((field) => {
-      if (field.hasOwnProperty("fields")) {
-        (field as FieldGroup).fields.forEach((subField) => {
-          const value = formData.get(subField.name);
-          if (value) {
-            data[subField.name] = subField.transform
-              ? subField.transform(value)
-              : value;
-          }
-        });
-      } else {
-        field = field as Field;
-        const value = formData.get(field.name);
-        if (value) {
-          data[field.name] = field.transform ? field.transform(value) : value;
-        }
-      }
-    });
-
-    if (Object.keys(data).length !== 0) props.onSubmit(data);
+    if (Object.keys(formData).length !== 0) props.onSubmit(formData as ReturnType);
   };
 
   return (
@@ -154,6 +145,9 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
                   field={subField}
                   addError={addError}
                   removeError={removeError}
+                  //@ts-ignore
+                  value={formData[subField.name] || ""}
+                  onChange={handleChange}
                 />
               ))}
             </div>
@@ -166,6 +160,9 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
             isSubmitted={isSubmitted}
             addError={addError}
             removeError={removeError}
+            //@ts-ignore
+            value={formData[(field as Field).name] || ""}
+            onChange={handleChange}
           />
         );
       })}

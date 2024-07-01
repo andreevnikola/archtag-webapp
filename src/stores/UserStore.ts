@@ -7,11 +7,11 @@ export interface UserStore extends User {
 
 export const useUserStore = create<UserStore>((set) => ({
   isBanned: false,
-  firstName: "",
-  lastName: "",
+  firstname: "",
+  lastname: "",
   email: "",
   uuid: "",
   role: "user",
-  isEmailValidated: false,
+  verified: false,
   setUser: (user: User) => set(user),
 }));
