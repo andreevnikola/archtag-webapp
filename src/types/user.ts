@@ -3,6 +3,7 @@ export interface User {
   email: string;
   firstname: string;
   lastname: string;
+  profilePictureUrl?: string; 
   isBanned: boolean;
   verified?: boolean;
   role: "admin" | "user";

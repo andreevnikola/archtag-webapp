@@ -37,9 +37,10 @@ export class Request<Body, Ret> {
   url: string;
   method: RestMethods;
   headers: Headers;
-  body: string | undefined;
+  body: string | FormData | undefined;
   retries: number;
   errorHandler: (error: ReqError) => void;
+  isMultipart: boolean;
 
   static builder<Body, Ret>() {
     return new RequestBuilder<Body, Ret>();
@@ -52,26 +53,40 @@ export class Request<Body, Ret> {
     body,
     retries,
     errorHandler,
+    isMultipart,
   }: {
     route: string | undefined;
     method: RestMethods | undefined;
     headers: any | undefined;
-    body: string | undefined;
+    body: string | FormData | undefined;
     retries: number | undefined;
     errorHandler?: (error: ReqError) => void;
+    isMultipart: boolean | undefined;
   }) {
     this.url = apiUrl + route || "";
     this.method = method || "GET";
-    this.headers = headers || {
-      "Content-Type": "application/json",
-    };
-    this.body = body || undefined;
+    this.headers = headers || new Headers();
+    this.isMultipart = isMultipart || false;
+
+    if (!this.isMultipart) {
+      this.headers.set("Content-Type", "application/json");
+      this.body = body ? JSON.stringify(body) : undefined;
+    } else {
+      this.body = body;
+    }
+
     this.retries = retries || 3;
     this.errorHandler = errorHandler || consoleErrorHandler;
   }
 
   setBody(body: Body): Request<Body, Ret> {
-    this.body = JSON.stringify(body);
+    if (body instanceof FormData) {
+      this.body = body;
+      this.headers.delete("Content-Type");
+    } else {
+      this.body = JSON.stringify(body);
+      this.headers.set("Content-Type", "application/json");
+    }
     return this;
   }
 
@@ -137,6 +152,7 @@ export class RequestBuilder<Body, Ret> {
       body: undefined,
       retries: undefined,
       errorHandler: undefined,
+      isMultipart: undefined,
     });
   }
 
@@ -146,15 +162,14 @@ export class RequestBuilder<Body, Ret> {
   }
 
   body(body: Body): RequestBuilder<Body, Ret> {
-    this.request.body = JSON.stringify(body);
+    this.request.setBody(body);
     return this;
   }
 
   headers(headers: any) {
-    this.request.headers = {
-      "Content-Type": "application/json",
+    this.request.headers = new Headers({
       ...headers,
-    };
+    });
     return this;
   }
 
@@ -177,6 +192,11 @@ export class RequestBuilder<Body, Ret> {
 
   useNotificatonErrorHandler(): RequestBuilder<Body, Ret> {
     this.request.errorHandler = notificationErrorHandler;
+    return this;
+  }
+
+  multipart(isMultipart: boolean): RequestBuilder<Body, Ret> {
+    this.request.isMultipart = isMultipart;
     return this;
   }
 
