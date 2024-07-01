@@ -5,16 +5,19 @@ import { useEffect, useState } from "react";
 
 export default function CustomInputField({
   field,
+  value,
+  onChange,
   isSubmitted,
   addError,
   removeError,
 }: {
   field: Field;
+  value: string;
+  onChange: (name: string, value: string) => void;
   isSubmitted: boolean;
   addError: (instanceName: string) => void;
   removeError: (instanceName: string) => void;
 }) {
-  const [value, setValue] = useState(field.defaultValue || "");
   const [isValid, setIsValid] = useState(true);
 
   const isErrorForManditoryVisible =
@@ -41,7 +44,7 @@ export default function CustomInputField({
       <Label htmlFor={field.name}>{field.title}</Label>
       <Input
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => onChange(field.name, e.target.value)}
         type={field.type}
         name={field.name}
         id={field.name}

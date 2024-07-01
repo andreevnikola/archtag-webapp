@@ -16,8 +16,8 @@ export function signOut() {
   useAuthenticationStore.getState().setRefreshToken("");
   useUserStore.getState().setUser({
     isBanned: false,
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     uuid: "",
     role: "user",

@@ -15,6 +15,7 @@ import { Route as AuthImport } from './routes/auth'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
 import { Route as AuthAuthenticateImport } from './routes/auth/_authenticate'
+import { Route as AuthenticatedAccountImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthAuthenticateVerifyEmailImport } from './routes/auth/_authenticate/verify-email'
 import { Route as AuthAuthenticateSigninImport } from './routes/auth/_authenticate/signin'
@@ -42,6 +43,11 @@ const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
 const AuthAuthenticateRoute = AuthAuthenticateImport.update({
   id: '/_authenticate',
   getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthenticatedAccountRoute = AuthenticatedAccountImport.update({
+  path: '/account',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedDashboardIndexRoute =
@@ -90,6 +96,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/account': {
+      preLoaderRoute: typeof AuthenticatedAccountImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/auth/_authenticate': {
       preLoaderRoute: typeof AuthAuthenticateImport
       parentRoute: typeof AuthImport
@@ -129,6 +139,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   AuthenticatedRoute.addChildren([
+    AuthenticatedAccountRoute,
     AuthenticatedIndexRoute,
     AuthenticatedDashboardIndexRoute,
   ]),
