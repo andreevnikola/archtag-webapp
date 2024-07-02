@@ -25,6 +25,7 @@ jobs:
 
       - name: Create .env file
         run: |
+          mkdir -p archtag-webapp
           echo "VITE_PROMOTIONAL_WEBSITE_URL=${{ secrets.VITE_PROMOTIONAL_WEBSITE_URL }}" >> archtag-webapp/.env
           echo "VITE_APP_URL=${{ secrets.VITE_APP_URL }}" >> archtag-webapp/.env
           echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> archtag-webapp/.env
@@ -34,7 +35,7 @@ jobs:
         run: |
           docker buildx create --use
           docker buildx build --platform linux/amd64,linux/arm64 --push --tag vladigpasev/archtag-webapp:latest .
-          
+
   deploy:
     if: contains(github.event.head_commit.message, 'deploy')
     runs-on: ubuntu-latest
