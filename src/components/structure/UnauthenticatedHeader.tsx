@@ -6,18 +6,14 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 import { cn, getPromotionalWebsiteUrl } from "@/lib/utils";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBarsProgress,
-  faGear,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { UserProfileButton } from "./UserProfileButton";
 import { HamburgerMenu } from "./HamburgerMenu";
 import { ModeToggle } from "../theme-picker/mode-toggle";
 import { useThemeRelatedAssetUrl } from "@/lib/hooks/useThemeRelatedAsset";
@@ -104,6 +100,7 @@ export function UnauthenticatedHeader() {
 export const ListItem = React.forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a">
+  //@ts-ignore
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>

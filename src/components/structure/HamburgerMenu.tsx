@@ -128,7 +128,6 @@ export function HamburgerMenu() {
           <hr className="border-border" />
           <li>
             <Link
-              to="/company"
               className="p-2 rounded-md transition active:bg-accent-transparent-50 hover:bg-accent-transparent-30 flex items-center gap-1.5 font-semibold"
             >
               <FontAwesomeIcon icon={faGear} className="h-4" />
