@@ -4,12 +4,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '.github/**'
-    tags-ignore:
-      - '*'
-    # Only run if the commit message contains the word 'deploy'
-    types: [created, deleted, pushed]
 
 jobs:
   deploy:
