@@ -23,18 +23,26 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
       - name: Create .env file
         run: |
           mkdir -p archtag-webapp
-          echo "VITE_PROMOTIONAL_WEBSITE_URL=${{ secrets.VITE_PROMOTIONAL_WEBSITE_URL }}" >> archtag-webapp/.env
-          echo "VITE_APP_URL=${{ secrets.VITE_APP_URL }}" >> archtag-webapp/.env
-          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> archtag-webapp/.env
+          echo "VITE_PROMOTIONAL_WEBSITE_URL=https://archtag.net" >> archtag-webapp/.env
+          echo "VITE_APP_URL=https://archtag.net/app" >> archtag-webapp/.env
+          echo "VITE_API_URL=http://195.179.231.200:8080/api" >> archtag-webapp/.env
 
       - name: Build and push Docker images
-        working-directory: archtag-webapp  # Ensure you are in the correct directory
+        working-directory: archtag-webapp
         run: |
           docker buildx create --use
-          docker buildx build --platform linux/amd64,linux/arm64 --push --tag vladigpasev/archtag-webapp:latest .
+          docker buildx build --platform linux/amd64,linux/arm64 --cache-to type=inline --cache-from type=local,src=/tmp/.buildx-cache --push --tag vladigpasev/archtag-webapp:latest .
 
   deploy:
     if: contains(github.event.head_commit.message, 'deploy')
