@@ -31,7 +31,6 @@ jobs:
           echo "VITE_API_URL=http://195.179.231.200:8080/api" >> ./.env
 
       - name: Build and push Docker images
-        working-directory: archtag-webapp  # Ensure you are in the correct directory
         run: |
           docker buildx create --use
           docker buildx build --platform linux/amd64,linux/arm64 --cache-to type=inline --cache-from type=local,src=/tmp/.buildx-cache --push --tag vladigpasev/archtag-webapp:latest .
