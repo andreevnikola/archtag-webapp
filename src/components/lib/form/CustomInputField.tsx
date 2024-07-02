@@ -7,13 +7,15 @@ export default function CustomInputField({
   field,
   value,
   onChange,
+  onFileChange,
   isSubmitted,
   addError,
   removeError,
 }: {
   field: Field;
-  value: string;
-  onChange: (name: string, value: string) => void;
+  value: any;
+  onChange: (name: string, value: any) => void;
+  onFileChange: (name: string, files: FileList | null) => void;
   isSubmitted: boolean;
   addError: (instanceName: string) => void;
   removeError: (instanceName: string) => void;
@@ -39,12 +41,21 @@ export default function CustomInputField({
     }
   }, [value, isSubmitted]);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target;
+    if (field.type === "file") {
+      onFileChange(name, files);
+    } else {
+      onChange(name, field.transform ? field.transform(value) : value);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-1.5 w-full">
       <Label htmlFor={field.name}>{field.title}</Label>
       <Input
-        value={value}
-        onChange={(e) => onChange(field.name, e.target.value)}
+        value={field.type === "file" ? undefined : value}
+        onChange={handleChange}
         type={field.type}
         name={field.name}
         id={field.name}

@@ -4,7 +4,7 @@ import {
     Field,
     FieldGroup,
 } from "@/components/lib/form/CustomForm";
-import { faUserEdit, faKey } from "@fortawesome/free-solid-svg-icons";
+import { faUserEdit, faKey, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useRef } from "react";
 import { useAuthenticationStore } from "@/stores/AuthenticationStore";
@@ -21,6 +21,10 @@ interface IProfileForm {
 interface IPasswordForm {
     currentPassword: string;
     password: string;
+}
+
+interface IProfilePictureForm {
+    profilePicture: File | null;
 }
 
 const profileFormFields: Array<Field | FieldGroup> = [
@@ -77,6 +81,17 @@ const passwordFormFields: Array<Field | FieldGroup> = [
     },
 ];
 
+const profilePictureFormFields: Array<Field | FieldGroup> = [
+    {
+        name: "profilePicture",
+        type: "file",
+        title: "Качи Профилна Снимка",
+        placeholder: "",
+        validation: (value: File | null) => !!value,
+        errorMessage: "Моля изберете файл за качване!",
+    },
+];
+
 export const Route = createFileRoute("/_authenticated/account")({
     component: AccountPage,
 });
@@ -92,7 +107,7 @@ function AccountPage() {
     const [defaultData, setDefaultData] = useState<IProfileForm | null>(null);
     const [passwordFormData, setPasswordFormData] = useState<IPasswordForm>({ currentPassword: "", password: "" });
     const [passwordFormKey, setPasswordFormKey] = useState<number>(0);
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [profilePictureFormData, setProfilePictureFormData] = useState<IProfilePictureForm>({ profilePicture: null });
     const [isUploading, setIsUploading] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -179,19 +194,16 @@ function AccountPage() {
         }
     };
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files.length > 0) {
-            setSelectedFile(event.target.files[0]);
+    const handleProfilePictureSubmit = async (data: IProfilePictureForm) => {
+        if (!data.profilePicture) {
+            setError("Моля изберете файл за качване!");
+            return;
         }
-    };
 
-    const handleUpload = async () => {
-        if (!selectedFile) return;
-    
         const formData = new FormData();
         formData.append('email', email);
-        formData.append('profilePicture', selectedFile);
-    
+        formData.append('profilePicture', data.profilePicture);
+
         try {
             const req = Request.builder<FormData, any>()
                 .method("POST")
@@ -202,11 +214,11 @@ function AccountPage() {
                 .body(formData)
                 .multipart(true) // Specify that this is a multipart request
                 .build();
-    
+
             setIsUploading(true);
             const { res, error } = await req.send();
             setIsUploading(false);
-    
+
             if (error) {
                 setError("Неуспешно качване на изображение!");
                 console.error(error);
@@ -220,8 +232,6 @@ function AccountPage() {
             console.error(error);
         }
     };
-    
-    
 
     return (
         <div className="flex flex-col justify-center items-center gap-6 w-full">
@@ -266,24 +276,21 @@ function AccountPage() {
                                 initialData={passwordFormData}
                                 isLoading={false}
                             />
-                            <div className="flex flex-col items-center">
-                                {profilePictureUrl && (
-                                    <img src={profilePictureUrl} alt="Profile Picture" className="w-32 h-32 rounded-full" />
-                                )}
-                                <input
-                                    type="file"
-                                    ref={fileInputRef}
-                                    onChange={handleFileChange}
-                                    className="mt-4"
-                                />
-                                <button
-                                    onClick={handleUpload}
-                                    className="btn btn-primary mt-2"
-                                    disabled={isUploading}
-                                >
-                                    {isUploading ? "Качване..." : "Качи Снимка"}
-                                </button>
-                            </div>
+                            <CustomForm<IProfilePictureForm>
+                                onSubmit={handleProfilePictureSubmit}
+                                fields={profilePictureFormFields}
+                                submitButtonType={ButtonCustomizationType.CUSTOM_TEXT_AND_ICON}
+                                submitButton={{
+                                    icon: faUpload,
+                                    text: "Качи Снимка",
+                                    size: "full",
+                                }}
+                                initialData={profilePictureFormData}
+                                isLoading={isUploading}
+                            />
+                            {profilePictureUrl && (
+                                <img src={profilePictureUrl} alt="Profile Picture" className="w-32 h-32 rounded-full" />
+                            )}
                         </>
                     )}
                 </>

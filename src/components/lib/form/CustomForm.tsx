@@ -5,7 +5,6 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { Button } from "@/components/ui/button";
 import { ErrorComponent, Link } from "@tanstack/react-router";
 import CustomInputField from "./CustomInputField";
-import { error } from "console";
 
 export enum ButtonCustomizationType {
   CUSTOM_TEXT = "CUSTOM_TEXT",
@@ -73,7 +72,7 @@ interface CustomFormProps<ReturnType> {
   belowButtonContent?: JSX.Element;
   fields: Array<Field | FieldGroup>;
   isLoading: boolean;
-  initialData?: Partial<ReturnType>; // Add initialData prop
+  initialData?: Partial<ReturnType>;
 }
 
 export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
@@ -104,6 +103,12 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleFileChange = (name: string, files: FileList | null) => {
+    if (files && files.length > 0) {
+      setFormData((prevData) => ({ ...prevData, [name]: files[0] }));
+    }
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
@@ -122,6 +127,7 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
         }
       }}
       className="flex flex-col gap-4 items-center justify-center w-full p-2"
+      encType="multipart/form-data"
     >
       {props.title && (
         <h1 className="scroll-m-20 text-3xl font-bold tracking-tight lg:text-4xl">
@@ -148,6 +154,7 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
                   //@ts-ignore
                   value={formData[subField.name] || ""}
                   onChange={handleChange}
+                  onFileChange={handleFileChange}
                 />
               ))}
             </div>
@@ -163,6 +170,7 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
             //@ts-ignore
             value={formData[(field as Field).name] || ""}
             onChange={handleChange}
+            onFileChange={handleFileChange}
           />
         );
       })}
