@@ -93,7 +93,7 @@ function SignInPage() {
   return (
     <div className="flex flex-col justify-center items-center gap-6 w-full">
       <h1 className="scroll-m-20 text-3xl font-bold tracking-tight lg:text-4xl">
-        Впиши се (This is a test)
+        Впиши се
       </h1>
 
       <CustomForm<ISignInForm>
