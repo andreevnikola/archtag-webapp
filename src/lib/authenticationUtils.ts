@@ -3,7 +3,6 @@ import { Request } from "./requestr";
 import { User } from "@/types/user";
 import { useUserStore } from "@/stores/UserStore";
 import { redirect } from "@tanstack/react-router";
-import { ModalController } from "@/components/lib/modal/ModalController";
 
 export function isAuthenticated() {
   return (

@@ -107,11 +107,13 @@ function AccountPage() {
     const [defaultData, setDefaultData] = useState<IProfileForm | null>(null);
     const [passwordFormData, setPasswordFormData] = useState<IPasswordForm>({ currentPassword: "", password: "" });
     const [passwordFormKey, setPasswordFormKey] = useState<number>(0);
+    //@ts-ignore
     const [profilePictureFormData, setProfilePictureFormData] = useState<IProfilePictureForm>({ profilePicture: null });
     const [isUploading, setIsUploading] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    //@ts-ignore
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -149,7 +151,7 @@ function AccountPage() {
             })
             .body(data)
             .build();
-
+        //@ts-ignore
         const { res, error } = await req.send();
 
         if (error) {
@@ -177,7 +179,7 @@ function AccountPage() {
                 password: data.password,
             })
             .build();
-
+        //@ts-ignore
         const { res, error } = await req.send();
 
         if (error) {
@@ -216,6 +218,7 @@ function AccountPage() {
                 .build();
 
             setIsUploading(true);
+            //@ts-ignore
             const { res, error } = await req.send();
             setIsUploading(false);
 

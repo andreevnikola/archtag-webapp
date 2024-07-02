@@ -4,7 +4,6 @@ import {
   Field,
   FieldGroup,
 } from "@/components/lib/form/CustomForm";
-import { useRequestr } from "@/lib/hooks/requestr-hook";
 import { Request } from "@/lib/requestr";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
@@ -49,7 +48,7 @@ function ResetPasswordPage() {
   const navigate = useNavigate();
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
 
-  const { send, res, isLoading, error } = Request.builder<
+  const { send, res, isLoading } = Request.builder<
     ResetPasswordRequest,
     ResetPasswordResponse
   >()

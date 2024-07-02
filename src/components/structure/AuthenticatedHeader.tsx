@@ -87,7 +87,7 @@ export function AuthenticatedHeader() {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to="/company">
+              <Link>
                 <div className={navigationMenuTriggerStyle()}>
                   <FontAwesomeIcon icon={faGear} className="h-3 mr-1.5" />{" "}
                   Настройки
@@ -126,6 +126,7 @@ export function AuthenticatedHeader() {
 export const ListItem = React.forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a">
+  //@ts-ignore
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>

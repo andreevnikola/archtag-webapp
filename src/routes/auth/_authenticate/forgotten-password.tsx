@@ -4,10 +4,9 @@ import {
   Field,
   FieldGroup,
 } from "@/components/lib/form/CustomForm";
-import { useRequestr } from "@/lib/hooks/requestr-hook";
 import { Request } from "@/lib/requestr";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/auth/_authenticate/forgotten-password")({
@@ -51,8 +50,6 @@ interface ForgottenPassResponse {
 }
 
 function ForgottenPasswordPage() {
-  const { from } = Route.useSearch();
-  const navigate = useNavigate();
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
 
   const { send, res, isLoading, error } = Request.builder<

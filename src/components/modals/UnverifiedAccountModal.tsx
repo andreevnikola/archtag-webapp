@@ -39,7 +39,7 @@ export function UnverifiedAccountModal() {
 
   const handleResendVerification = async () => {
     setIsLoading(true); // Start loading
-    const { res, error } = await resendVerificationRequest(token).send();
+    const { error } = await resendVerificationRequest(token).send();
     setIsLoading(false); // End loading
 
     if (!error) {

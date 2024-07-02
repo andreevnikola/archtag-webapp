@@ -1,14 +1,11 @@
-import { Message, useMessageStore } from "@/stores/MessageStore";
-import { useEffect, useRef } from "react";
+import { useMessageStore } from "@/stores/MessageStore";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { RocketIcon } from "lucide-react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
   faCircleCheck,
-  faEnvelope,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 

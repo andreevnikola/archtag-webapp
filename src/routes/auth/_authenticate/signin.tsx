@@ -5,11 +5,9 @@ import {
   FieldGroup,
 } from "@/components/lib/form/CustomForm";
 import { authenticate } from "@/lib/authenticationUtils";
-import { useRequestr } from "@/lib/hooks/requestr-hook";
 import { Request } from "@/lib/requestr";
-import { useAuthenticationStore } from "@/stores/AuthenticationStore";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 export const Route = createFileRoute("/auth/_authenticate/signin")({

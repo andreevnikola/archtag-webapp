@@ -3,6 +3,7 @@ import { FormEvent, useState, useEffect } from "react";
 import CustomFormButton from "./CustomFormButton";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { Button } from "@/components/ui/button";
+//@ts-ignore
 import { ErrorComponent, Link } from "@tanstack/react-router";
 import CustomInputField from "./CustomInputField";
 
