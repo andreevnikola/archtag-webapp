@@ -1,5 +1,5 @@
 # Use the official Node.js image to build the application
-FROM node:16 as build
+FROM node:18 as build
 WORKDIR /app
 COPY . .
 RUN npm install
