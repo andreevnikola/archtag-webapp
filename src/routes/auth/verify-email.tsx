@@ -6,6 +6,7 @@ import { faCertificate, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/lib/hooks/useUser";
 import { useAuthenticationStore } from "@/stores/AuthenticationStore";
+import { revalidateToken, updateUserData } from "@/lib/authenticationUtils";
 
 export const Route = createFileRoute("/auth/verify-email")({
   component: VerifyEmailPage,
@@ -36,9 +37,23 @@ function VerifyEmailPage() {
   const navigate = useNavigate();
   const [hasErrorOccured, setHasErrorOccured] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { isAuthenticaed } = useUser();
+  const { isAuthenticated, verified } = useUser();
   const token = useAuthenticationStore((state) => state.token); // Retrieve the token from the store
   const [isResendingVerification, setIsResendingVerification] = useState(false);
+
+  console.log(verified);
+
+  useEffect(() => {
+    updateUserData();
+  }, []);
+
+  useEffect(() => {
+    if (verified) {
+      navigate({
+        to: "/",
+      });
+    }
+  }, [verified]);
 
   useEffect(() => {
     const verifyEmailRequest = Request.builder<{}, VerifyEmailResponse>()
@@ -67,6 +82,14 @@ function VerifyEmailPage() {
     setIsResendingVerification(false);
   };
 
+  const handleGoToAccount = async () => {
+    await revalidateToken();
+
+    navigate({
+      to: "/account",
+    });
+  };
+
   return (
     <div className="flex w-full min-h-reasonably-tall items-center justify-center p-2">
       <div
@@ -80,7 +103,7 @@ function VerifyEmailPage() {
         </div>
         <h1 className="scroll-m-20 text-3xl font-bold tracking-tight lg:text-4xl text-center">
           {hasErrorOccured && "Не успяхме да активираме акаунта Ви"}
-          {!hasErrorOccured && "Успешно активирахте акаунта Ви"}
+          {!hasErrorOccured && "Успешно активирахте акаунта си"}
         </h1>
         <div className="flex flex-row gap-7 p-4 w-full max-w-3xl">
           <div className="flex flex-col min-h-[100%] items-center justify-center max-sm:hidden">
@@ -117,18 +140,20 @@ function VerifyEmailPage() {
                     >
                       Вписване в друг акаунт
                     </Button>
-                    <Button
-                      onClick={() => handleResendVerification()}
-                      className="w-full"
-                      variant={"default"}
-                      disabled={isResendingVerification}
-                    >
-                      Препрати имейл за верификация
-                    </Button>
+                    {isAuthenticated && (
+                      <Button
+                        onClick={() => handleResendVerification()}
+                        className="w-full"
+                        variant={"default"}
+                        disabled={isResendingVerification}
+                      >
+                        Препрати имейл за верификация
+                      </Button>
+                    )}
                   </>
                 ) : (
                   <>
-                    {!isAuthenticaed && (
+                    {!isAuthenticated && (
                       <Button
                         onClick={() =>
                           navigate({
@@ -142,11 +167,7 @@ function VerifyEmailPage() {
                       </Button>
                     )}
                     <Button
-                      onClick={() =>
-                        navigate({
-                          to: "/account",
-                        })
-                      }
+                      onClick={() => handleGoToAccount()}
                       className="w-full"
                       variant={"default"}
                     >

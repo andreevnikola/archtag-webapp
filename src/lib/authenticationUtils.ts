@@ -20,7 +20,7 @@ export function signOut() {
     email: "",
     uuid: "",
     role: "user",
-    profilePictureUrl: "",  // Reset profile picture URL
+    profilePictureUrl: "", // Reset profile picture URL
     verified: false,
   });
 }

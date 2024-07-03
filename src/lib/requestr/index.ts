@@ -1,3 +1,4 @@
+import { useAuthenticationStore } from "@/stores/AuthenticationStore";
 import { apiUrl } from "../config";
 import { useRequestr } from "../hooks/requestr-hook";
 import consoleErrorHandler from "./error-handlers/consoleErrorHandler";
@@ -31,6 +32,7 @@ export type RestMethods = "GET" | "POST" | "PUT" | "DELETE";
 export interface ReqError {
   status: number;
   message: string;
+  request?: Request<any, any>;
 }
 
 export class Request<Body, Ret> {
@@ -41,6 +43,7 @@ export class Request<Body, Ret> {
   retries: number;
   errorHandler: (error: ReqError) => void;
   isMultipart: boolean;
+  isAuthenticated: boolean;
 
   static builder<Body, Ret>() {
     return new RequestBuilder<Body, Ret>();
@@ -54,6 +57,7 @@ export class Request<Body, Ret> {
     retries,
     errorHandler,
     isMultipart,
+    isAuthenticated,
   }: {
     route: string | undefined;
     method: RestMethods | undefined;
@@ -62,6 +66,7 @@ export class Request<Body, Ret> {
     retries: number | undefined;
     errorHandler?: (error: ReqError) => void;
     isMultipart: boolean | undefined;
+    isAuthenticated?: boolean | undefined;
   }) {
     this.url = apiUrl + route || "";
     this.method = method || "GET";
@@ -77,6 +82,7 @@ export class Request<Body, Ret> {
 
     this.retries = retries || 3;
     this.errorHandler = errorHandler || consoleErrorHandler;
+    this.isAuthenticated = isAuthenticated || false;
   }
 
   setBody(body: Body): Request<Body, Ret> {
@@ -127,6 +133,7 @@ export class Request<Body, Ret> {
       this.errorHandler({
         status: response.status,
         message: data?.message || "Нещо се обърка!",
+        request: this,
       });
       return {
         res: null,
@@ -153,6 +160,7 @@ export class RequestBuilder<Body, Ret> {
       retries: undefined,
       errorHandler: undefined,
       isMultipart: undefined,
+      isAuthenticated: false,
     });
   }
 
@@ -197,6 +205,15 @@ export class RequestBuilder<Body, Ret> {
 
   multipart(isMultipart: boolean): RequestBuilder<Body, Ret> {
     this.request.isMultipart = isMultipart;
+    return this;
+  }
+
+  authenticatedRequest(): RequestBuilder<Body, Ret> {
+    this.request.isAuthenticated = true;
+    this.request.headers.set(
+      "Authorization",
+      `Bearer ${useAuthenticationStore.getState().token}`
+    );
     return this;
   }
 

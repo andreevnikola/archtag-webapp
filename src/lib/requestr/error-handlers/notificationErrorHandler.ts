@@ -6,7 +6,10 @@ export default function notificationErrorHandler(error: ReqError) {
 
   useMessageStore.getState().push({
     title: "Грешка",
-    message: error.message,
+    message:
+      error.status === 403 && error.request?.isAuthenticated
+        ? "Не сте ауторизирани за тази операция"
+        : error.message,
     type: "error",
   });
 }

@@ -12,7 +12,7 @@ export const useUserStore = create<UserStore>((set) => ({
   email: "",
   uuid: "",
   role: "user",
-  profilePictureUrl: "",  // Add this line
+  profilePictureUrl: "", // Add this line
   verified: false,
   setUser: (user: User) => set(user),
 }));
