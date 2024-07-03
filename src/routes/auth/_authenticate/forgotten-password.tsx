@@ -51,6 +51,7 @@ interface ForgottenPassResponse {
 
 function ForgottenPasswordPage() {
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   const { send, res, isLoading, error } = Request.builder<
     ForgottenPassRequest,
@@ -67,16 +68,18 @@ function ForgottenPasswordPage() {
   };
 
   useEffect(() => {
+    setHasError(false);
     if (res) {
-      console.log("Response received: ", res);
       if (res.success) {
-        setResponseMessage("Ще изпратим имейл с инструкции за смяна на паролата.");
+        setResponseMessage(
+          "Последвайте инструкциите за смяна на паролата, които сме изпратили на посочения по-долу имейл."
+        );
       } else {
         setResponseMessage("");
       }
     } else if (error) {
       console.error("Error: ", error);
-      setResponseMessage("Възникна грешка, моля опитайте отново.");
+      setHasError(true);
     }
   }, [res, error]);
 
@@ -86,9 +89,15 @@ function ForgottenPasswordPage() {
         Забравена парола
       </h1>
 
-      {responseMessage && (
-        <div className="alert text-green-400">
+      {responseMessage && !hasError && (
+        <div className="alert text-green-400 text-center -mb-2">
           {responseMessage}
+        </div>
+      )}
+
+      {hasError && (
+        <div className="alert text-red-400 text-center -mb-2">
+          Възникна грешка при изпращането на имейла с инструкции.
         </div>
       )}
 
@@ -102,12 +111,6 @@ function ForgottenPasswordPage() {
           text: "Изпрати",
           size: "full",
         }}
-        links={[
-          {
-            text: "Вход",
-            href: "/auth/signin",
-          },
-        ]}
       />
     </div>
   );

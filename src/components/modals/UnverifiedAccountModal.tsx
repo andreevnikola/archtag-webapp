@@ -17,7 +17,7 @@ const resendVerificationRequest = (token: string) =>
     .method("GET")
     .url("/auth/resend-verification")
     .headers({
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     })
     .build();
 
@@ -47,7 +47,9 @@ export function UnverifiedAccountModal() {
       setIsButtonDisabled(true);
       setCountdown(3); // Start countdown from 3 seconds
     } else {
-      setResponseMessage("Error resending verification email: " + error.message);
+      setResponseMessage(
+        "Error resending verification email: " + error.message
+      );
     }
   };
 
@@ -72,19 +74,19 @@ export function UnverifiedAccountModal() {
           на посоченият от вас имейл адрес ({user.email}).
         </DialogDescription>
       </DialogHeader>
-      {responseMessage && (
-        <div className="alert">
-          {responseMessage}
-        </div>
-      )}
+      {responseMessage && <div className="alert">{responseMessage}</div>}
       <div className="flex gap-2 flex-row max-sm:flex-col mt-2">
-        <Button 
-          variant={"outline"} 
-          className="w-full" 
-          onClick={handleResendVerification} 
+        <Button
+          variant={"outline"}
+          className="w-full"
+          onClick={handleResendVerification}
           disabled={isButtonDisabled || isLoading}
         >
-          {isLoading ? "Loading..." : isButtonDisabled ? `Препрати верификация (${countdown})` : "Препрати верификация"}
+          {isLoading
+            ? "Loading..."
+            : isButtonDisabled
+              ? `Препрати верификация (${countdown})`
+              : "Препрати верификация"}
         </Button>
         <Button
           onClick={() => handleSignOut()}
