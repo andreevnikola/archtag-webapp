@@ -4,7 +4,7 @@ import {
   Field,
   FieldGroup,
 } from "@/components/lib/form/CustomForm";
-import { authenticate } from "@/lib/authenticationUtils";
+import { authenticate } from "@/lib/utils/authenticationUtils";
 import { Request } from "@/lib/requestr";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";

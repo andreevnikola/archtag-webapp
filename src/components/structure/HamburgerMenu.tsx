@@ -26,7 +26,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { getPromotionalWebsiteUrl } from "@/lib/utils";
+import { getPromotionalWebsiteUrl } from "@/lib/utils/utils";
 import { useThemeRelatedAssetUrl } from "@/lib/hooks/useThemeRelatedAsset";
 
 export function HamburgerMenu() {
@@ -127,9 +127,7 @@ export function HamburgerMenu() {
           </li>
           <hr className="border-border" />
           <li>
-            <Link
-              className="p-2 rounded-md transition active:bg-accent-transparent-50 hover:bg-accent-transparent-30 flex items-center gap-1.5 font-semibold"
-            >
+            <Link className="p-2 rounded-md transition active:bg-accent-transparent-50 hover:bg-accent-transparent-30 flex items-center gap-1.5 font-semibold">
               <FontAwesomeIcon icon={faGear} className="h-4" />
               Настройки на компанията
             </Link>

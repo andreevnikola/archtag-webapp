@@ -1,8 +1,10 @@
 import { useAuthenticationStore } from "@/stores/AuthenticationStore";
-import { Request } from "./requestr";
+import { Request } from "../requestr";
 import { User } from "@/types/user";
 import { useUserStore } from "@/stores/UserStore";
 import { redirect } from "@tanstack/react-router";
+import { getProfilePictureUrl } from "./profileUtils";
+import { PublicUser } from "../public-user";
 
 export function isAuthenticated() {
   return (
@@ -22,6 +24,7 @@ export function signOut() {
     role: "user",
     profilePictureUrl: "", // Reset profile picture URL
     verified: false,
+    perPublicUser: null,
   });
 }
 
@@ -45,7 +48,24 @@ export async function updateUserData() {
     return;
   }
 
-  useUserStore.getState().setUser(res!);
+  if (!res) {
+    return;
+  }
+
+  console.log(res);
+
+  const perPublicUser = PublicUser.builder()
+    .setEmail(res.email)
+    .setFirstName(res.firstname)
+    .setLastName(res.lastname)
+    .setProfilePictureFileName(res.profilePictureFileName)
+    .build();
+
+  useUserStore.getState().setUser({
+    profilePictureUrl: getProfilePictureUrl(perPublicUser),
+    ...res,
+    perPublicUser: perPublicUser,
+  });
   console.log("User data updated: ", res);
 }
 

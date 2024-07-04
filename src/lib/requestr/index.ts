@@ -3,6 +3,7 @@ import { apiUrl } from "../config";
 import { useRequestr } from "../hooks/requestr-hook";
 import consoleErrorHandler from "./error-handlers/consoleErrorHandler";
 import notificationErrorHandler from "./error-handlers/notificationErrorHandler";
+import { revalidateToken } from "../utils/authenticationUtils";
 
 export type RestMethods = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -44,6 +45,7 @@ export class Request<Body, Ret> {
   errorHandler: (error: ReqError) => void;
   isMultipart: boolean;
   isAuthenticated: boolean;
+  hadTriedToRevalidate: boolean = false;
 
   static builder<Body, Ret>() {
     return new RequestBuilder<Body, Ret>();
@@ -127,6 +129,12 @@ export class Request<Body, Ret> {
     if (!response.ok) {
       if (this.retries > 0 && response.status >= 500) {
         this.retries--;
+        return await this.send();
+      }
+
+      if (response.status === 403 && !this.hadTriedToRevalidate) {
+        await revalidateToken();
+        this.hadTriedToRevalidate = true;
         return await this.send();
       }
 

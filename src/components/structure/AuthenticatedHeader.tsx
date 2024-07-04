@@ -8,7 +8,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
-import { cn, getPromotionalWebsiteUrl } from "@/lib/utils";
+import { cn, getPromotionalWebsiteUrl } from "@/lib/utils/utils";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

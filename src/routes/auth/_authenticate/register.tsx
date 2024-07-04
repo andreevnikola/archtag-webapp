@@ -9,7 +9,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import { Request } from "@/lib/requestr";
 import { useEffect } from "react";
-import { authenticate } from "@/lib/authenticationUtils";
+import { authenticate } from "@/lib/utils/authenticationUtils";
 
 export const Route = createFileRoute("/auth/_authenticate/register")({
   component: SignInPage,

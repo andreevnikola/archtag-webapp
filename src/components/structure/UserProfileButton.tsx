@@ -14,7 +14,7 @@ import {
   faRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { signOut } from "@/lib/authenticationUtils";
+import { signOut } from "@/lib/utils/authenticationUtils";
 import { useNavigate } from "@tanstack/react-router";
 
 export const UserProfileButton = () => {
@@ -35,7 +35,10 @@ export const UserProfileButton = () => {
         <DropdownMenuContent className="w-36 -right-7 absolute">
           <DropdownMenuLabel>Моят Профил</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="flex gap-2 cursor-pointer">
+          <DropdownMenuItem
+            onClick={() => navigate({ to: "/profile" })}
+            className="flex gap-2 cursor-pointer"
+          >
             <FontAwesomeIcon icon={faUser} className="h-3" /> Настройки
           </DropdownMenuItem>
           <DropdownMenuItem className="flex gap-1.5 cursor-pointer">

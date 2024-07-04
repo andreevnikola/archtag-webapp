@@ -70,3 +70,7 @@ body, html {
   padding: 0;
   margin: 0;
 }
+
+.centered-container {
+  @apply flex flex-col gap-16 min-w-96 rounded-2xl border border-primary-transparent-30 py-5 px-12
+}

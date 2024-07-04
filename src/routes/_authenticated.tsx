@@ -6,7 +6,7 @@ import {
   isEmailValidated,
   isHavingRefreshToken,
   revalidateToken,
-} from "@/lib/authenticationUtils";
+} from "@/lib/utils/authenticationUtils";
 import { useAuthenticationStore } from "@/stores/AuthenticationStore";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 

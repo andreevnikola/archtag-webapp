@@ -1,3 +1,4 @@
+import { PublicUser } from "@/lib/public-user";
 import { User } from "@/types/user";
 import { create } from "zustand";
 
@@ -14,5 +15,6 @@ export const useUserStore = create<UserStore>((set) => ({
   role: "user",
   profilePictureUrl: "", // Add this line
   verified: false,
+  perPublicUser: null,
   setUser: (user: User) => set(user),
 }));

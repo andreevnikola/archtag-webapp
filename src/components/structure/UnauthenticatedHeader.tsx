@@ -7,12 +7,10 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
-import { cn, getPromotionalWebsiteUrl } from "@/lib/utils";
+import { cn, getPromotionalWebsiteUrl } from "@/lib/utils/utils";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { HamburgerMenu } from "./HamburgerMenu";
 import { ModeToggle } from "../theme-picker/mode-toggle";

@@ -6,7 +6,10 @@ import { faCertificate, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/lib/hooks/useUser";
 import { useAuthenticationStore } from "@/stores/AuthenticationStore";
-import { revalidateToken, updateUserData } from "@/lib/authenticationUtils";
+import {
+  revalidateToken,
+  updateUserData,
+} from "@/lib/utils/authenticationUtils";
 
 export const Route = createFileRoute("/auth/verify-email")({
   component: VerifyEmailPage,
@@ -86,7 +89,7 @@ function VerifyEmailPage() {
     await revalidateToken();
 
     navigate({
-      to: "/account",
+      to: "/profile",
     });
   };
 

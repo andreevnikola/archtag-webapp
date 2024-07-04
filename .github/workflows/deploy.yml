@@ -23,9 +23,10 @@ jobs:
       - name: Create .env file
         run: |
           touch .env
-          echo "VITE_PROMOTIONAL_WEBSITE_URL=https://archtag.net" >> .env
-          echo "VITE_APP_URL=https://archtag.net/app" >> .env
-          echo "VITE_API_URL=http://195.179.231.200:8080/api" >> .env
+          echo "VITE_PROMOTIONAL_WEBSITE_URL=https://archtag.org" >> .env
+          echo "VITE_APP_URL=https://app.archtag.org" >> .env
+          echo "VITE_API_URL=https://api.archtag.org/api" >> .env
+          echo "VITE_API_URL=https://storage.archtag.org/storage" >> .env
 
       - name: Build and push Docker images
         run: |

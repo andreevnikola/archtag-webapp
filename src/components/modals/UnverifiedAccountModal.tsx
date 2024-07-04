@@ -5,7 +5,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "../ui/button";
 import { DialogHeader } from "../ui/dialog";
 import { useUser } from "@/lib/hooks/useUser";
-import { signOut } from "@/lib/authenticationUtils";
+import { signOut } from "@/lib/utils/authenticationUtils";
 import { useNavigate } from "@tanstack/react-router";
 import { useCustomModalStore } from "@/stores/CustomModalStore";
 import { useAuthenticationStore } from "@/stores/AuthenticationStore";
