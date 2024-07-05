@@ -7,6 +7,8 @@ import { useUser } from "@/lib/hooks/useUser";
 import { Request } from "@/lib/requestr";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { ModalController } from "@/components/lib/modal/ModalController";
+import { AccountDeletionModal } from "@/components/modals/AccountDeletionModal";
 
 export const Route = createFileRoute("/_authenticated/profile/")({
   component: ProfilePage,
@@ -19,6 +21,17 @@ function ProfilePage() {
 
   const handleDeleteAccount = async () => {
     setIsDeletingAccount(true);
+
+    ModalController.instanciate()
+      .setContent(<AccountDeletionModal />)
+      .setCanClose(true)
+      .onClose(() => {
+        console.log("closed");
+        setIsDeletingAccount(false);
+      })
+      .show();
+
+    return;
 
     const req = Request.builder()
       .url("/user/delete-account")

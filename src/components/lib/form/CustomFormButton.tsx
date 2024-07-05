@@ -13,11 +13,13 @@ export default function CustomFormButton({
   btnType,
   isDisabled,
   isLoading,
+  customStyle,
 }: {
   btn: CustomButton;
   btnType: ButtonCustomizationType;
   isDisabled: boolean;
   isLoading: boolean;
+  customStyle?: any;
 }) {
   if (btnType === ButtonCustomizationType.CUSTOM_BUTTON)
     return (btn as ICustomButton).element;
@@ -27,12 +29,13 @@ export default function CustomFormButton({
       <Button
         disabled={isDisabled || isLoading}
         variant={variant}
+        style={customStyle}
         className={
           size === "sm" || !size
             ? "flex gap-5 px-4 pr-8"
             : size === "lg"
               ? "flex gap-12 pl-4 pr-16"
-              : "flex w-full justify-between gap-3 px-4"
+              : "flex w-full justify-between gap-3 px-4 "
         }
       >
         <FontAwesomeIcon icon={icon} />
@@ -52,6 +55,7 @@ export default function CustomFormButton({
         disabled={isDisabled || isLoading}
         variant={variant}
         type="submit"
+        style={customStyle}
       >
         {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
         {text}

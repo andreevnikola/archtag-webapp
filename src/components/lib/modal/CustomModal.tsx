@@ -4,8 +4,10 @@ import { useEffect, useRef } from "react";
 
 export function CustomModal() {
   const isOpen = useCustomModalStore((state) => state.isOpen);
+  const onClose = useCustomModalStore((state) => state.onClose);
   const content = useCustomModalStore((state) => state.content);
   const canClose = useCustomModalStore((state) => state.canClose);
+  const close = useCustomModalStore((state) => state.close);
 
   const hasBeenOpened = useRef(false);
 
@@ -15,12 +17,15 @@ export function CustomModal() {
     if (isOpen) {
       hasBeenOpened.current = true;
       triggerer.current!.click();
-    } else if (hasBeenOpened.current) {
-      triggerer.current!.click();
     }
   }, [isOpen]);
 
   const manageOnFakeStateOfIsOpenedChange = (isFakeOpened: boolean) => {
+    console.log("isFakeOpen: " + isFakeOpened);
+    if (!isFakeOpened && canClose) {
+      if (onClose) onClose();
+      close();
+    }
     if (!isFakeOpened && !canClose) triggerer.current!.click();
   };
 

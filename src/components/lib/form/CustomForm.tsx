@@ -24,12 +24,13 @@ export interface ICustomTextAndIconSubmitButton extends ICustomSubmitButton {
 
 export interface ICustomButton {
   element: JSX.Element;
+  customStyle?: any;
 }
 
 interface ICustomSubmitButton {
   size?: "sm" | "lg" | "full";
   variant?: ButtonTypes;
-  className?: string;
+  customStyle?: any;
 }
 
 export type CustomButton =
@@ -115,7 +116,8 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
 
     if (!isSubmitted) setIsSubmitted(true);
 
-    if (Object.keys(formData).length !== 0) props.onSubmit(formData as ReturnType);
+    if (Object.keys(formData).length !== 0)
+      props.onSubmit(formData as ReturnType);
   };
 
   return (
@@ -182,6 +184,7 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
         isLoading={props.isLoading}
         btnType={props.submitButtonType}
         btn={props.submitButton}
+        customStyle={props.submitButton.customStyle || ""}
       />
       <div className="flex gap-0 max-sm:flex-col -mt-1 flex-row justify-center items-center">
         {props.links &&
