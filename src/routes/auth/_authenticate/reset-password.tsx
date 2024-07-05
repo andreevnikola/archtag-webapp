@@ -28,7 +28,7 @@ const resetPasswordFormFields: Array<Field | FieldGroup> = [
     type: "password",
     title: "Нова парола",
     placeholder: "Въведете нова парола",
-    validation: (value: string) => value.length >= 8,
+    validation: (value: string) => value.length >= 7,
     errorMessage: "Паролата трябва да е поне 8 символа!",
   },
 ];
@@ -72,7 +72,9 @@ function ResetPasswordPage() {
         // Optionally, redirect to the login page after a successful password reset
         navigate({ to: "/auth/signin" });
       } else {
-        setResponseMessage(res.message || "Възникна грешка, моля опитайте отново.");
+        setResponseMessage(
+          res.message || "Възникна грешка, моля опитайте отново."
+        );
       }
     }
   }, [res]);
@@ -83,11 +85,7 @@ function ResetPasswordPage() {
         Смяна на паролата
       </h1>
 
-      {responseMessage && (
-        <div className="alert">
-          {responseMessage}
-        </div>
-      )}
+      {responseMessage && <div className="alert">{responseMessage}</div>}
 
       <CustomForm<IResetPasswordForm>
         onSubmit={handleSubmit}
