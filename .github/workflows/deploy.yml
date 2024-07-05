@@ -26,7 +26,7 @@ jobs:
           echo "VITE_PROMOTIONAL_WEBSITE_URL=https://archtag.org" >> .env
           echo "VITE_APP_URL=https://app.archtag.org" >> .env
           echo "VITE_API_URL=https://api.archtag.org/api" >> .env
-          echo "VITE_API_URL=https://storage.archtag.org/storage" >> .env
+          echo "STORAGE_LOCATION_URL=https://storage.archtag.org/storage" >> .env
 
       - name: Build and push Docker images
         run: |
