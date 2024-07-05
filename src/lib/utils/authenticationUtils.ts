@@ -52,13 +52,11 @@ export async function updateUserData() {
     return;
   }
 
-  console.log(res);
-
   const perPublicUser = PublicUser.builder()
     .setEmail(res.email)
     .setFirstName(res.firstname)
     .setLastName(res.lastname)
-    .setProfilePictureFileName(res.profilePictureFileName)
+    .setProfilePictureFileName(res.profilePictureFilename)
     .build();
 
   useUserStore.getState().setUser({

@@ -6,7 +6,7 @@ export interface User {
   firstname: string;
   lastname: string;
   profilePictureUrl?: string;
-  profilePictureFileName?: string;
+  profilePictureFilename?: string;
   isBanned: boolean;
   verified?: boolean;
   role: "admin" | "user";

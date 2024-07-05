@@ -16,20 +16,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { signOut } from "@/lib/utils/authenticationUtils";
 import { useNavigate } from "@tanstack/react-router";
+import { useUser } from "@/lib/hooks/useUser";
 
 export const UserProfileButton = () => {
   const navigate = useNavigate();
+  const { profilePictureUrl } = useUser();
 
   return (
     <NavigationMenuItem className="-mr-3 flex items-center">
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar>
-            <AvatarImage
-              src="https://github.com/shadcn.png"
-              className="rounded-full"
-            />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={profilePictureUrl} className="rounded-full" />
+            <AvatarFallback>
+              <img
+                src="/both/profile-picture-loading.png"
+                className="rounded-full"
+              />
+            </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-36 -right-7 absolute">

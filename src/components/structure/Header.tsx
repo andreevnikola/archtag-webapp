@@ -7,11 +7,6 @@ import { useUser } from "@/lib/hooks/useUser";
 export function Header() {
   const router = useRouterState();
 
-  const { profilePictureUrl, perPublicUser } = useUser();
-  console.log(profilePictureUrl);
-  console.log(perPublicUser);
-  console.log(perPublicUser?.profilePictureUrl);
-
   if (!isAuthenticated()) return <UnauthenticatedHeader />;
 
   return <AuthenticatedHeader />;

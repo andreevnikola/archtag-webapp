@@ -66,7 +66,7 @@ class PublicUserBuilder {
 
   setProfilePictureFileName(profilePictureFileName: string | undefined | null) {
     if (!profilePictureFileName) return this;
-    profilePictureFileName = profilePictureFileName;
+    this.profilePictureFileName = profilePictureFileName;
     return this;
   }
 
