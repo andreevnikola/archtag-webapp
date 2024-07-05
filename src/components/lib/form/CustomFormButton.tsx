@@ -29,7 +29,7 @@ export default function CustomFormButton({
       <Button
         disabled={isDisabled || isLoading}
         variant={variant}
-        style={customStyle}
+        style={{ ...customStyle }}
         className={
           size === "sm" || !size
             ? "flex gap-5 px-4 pr-8"
