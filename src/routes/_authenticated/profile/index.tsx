@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_authenticated/profile/")({
 });
 
 function ProfilePage() {
-  const {} = useUser();
+  const { email } = useUser();
   const navigate = useNavigate();
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
 
@@ -50,6 +50,18 @@ function ProfilePage() {
         <h2 className="text-4xl w-full text-center font-semibold mt-5">
           Твоят профил
         </h2>
+
+        <div className="flex flex-col gap-0 -mb-6">
+          <div className="flex justify-between -mb-1.5 gap-1">
+            <p className="flex italic">имейл:</p>
+            <p className="flex font-semibold max-w-full overflow-auto">
+              {email}
+            </p>
+          </div>
+          <p className="text-xs text-success-transparent-80 text-right">
+            Елeктронната поща е потвърдена
+          </p>
+        </div>
 
         <div className="flex flex-col max-md:flex-col gap-3">
           <ProfileUpdateAccountComponent />

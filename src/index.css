@@ -72,5 +72,5 @@ body, html {
 }
 
 .centered-container {
-  @apply flex flex-col gap-16 min-w-96 rounded-2xl border border-primary-transparent-30 py-5 px-12 max-sm:w-full max-sm:min-w-0
+  @apply flex flex-col gap-14 min-w-96 rounded-2xl border border-primary-transparent-30 py-5 px-12 max-sm:w-full max-sm:min-w-0
 }
