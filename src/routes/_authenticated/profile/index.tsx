@@ -10,6 +10,7 @@ import { useState } from "react";
 import { ModalController } from "@/components/lib/modal/ModalController";
 import { AccountDeletionModal } from "@/components/modals/AccountDeletionModal";
 import { ProfileResetPassword } from "@/components/profile/profile-reset-password";
+import { ProfileUpdateAccountComponent } from "@/components/profile/profile-update-account";
 
 export const Route = createFileRoute("/_authenticated/profile/")({
   component: ProfilePage,
@@ -43,17 +44,18 @@ function ProfilePage() {
   };
 
   return (
-    <Holder className="p-2 max-sm:pt-28">
-      <div className="centered-container relative z-20">
+    <Holder className="p-2 pt-32">
+      <div className="centered-container relative -z-0">
         <InaccountProfilePicture />
-        <h2 className="text-4xl w-full text-center font-semibold z-20 mt-5">
+        <h2 className="text-4xl w-full text-center font-semibold mt-5">
           Твоят профил
         </h2>
 
-        <div className="flex flex-row max-md:flex-col gap-3">
+        <div className="flex flex-col max-md:flex-col gap-3">
+          <ProfileUpdateAccountComponent />
           <ProfileResetPassword />
         </div>
-        <div className="flex w-full sm:min-w-96 max-sm:flex-col flex-row gap-1.5 z-0">
+        <div className="flex w-full sm:min-w-96 max-sm:flex-col flex-row gap-1.5 z-0 -mt-5">
           <ButtonWithLoader
             variant={"destructive"}
             className="w-full"

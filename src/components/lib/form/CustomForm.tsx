@@ -156,6 +156,7 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
                   removeError={removeError}
                   //@ts-ignore
                   value={formData[subField.name] || ""}
+                  defaultValue={subField.defaultValue}
                   onChange={handleChange}
                   onFileChange={handleFileChange}
                 />

@@ -11,6 +11,7 @@ export default function CustomInputField({
   isSubmitted,
   addError,
   removeError,
+  defaultValue,
 }: {
   field: Field;
   value: any;
@@ -19,6 +20,7 @@ export default function CustomInputField({
   isSubmitted: boolean;
   addError: (instanceName: string) => void;
   removeError: (instanceName: string) => void;
+  defaultValue?: any;
 }) {
   const [isValid, setIsValid] = useState(true);
 
@@ -50,6 +52,8 @@ export default function CustomInputField({
     }
   };
 
+  console.log("defaultValue " + defaultValue);
+
   return (
     <div className="flex flex-col gap-1.5 w-full">
       <Label htmlFor={field.name}>{field.title}</Label>
@@ -61,6 +65,7 @@ export default function CustomInputField({
         id={field.name}
         autoComplete={field.name}
         placeholder={field.placeholder}
+        defaultValue={defaultValue}
       />
       {!isValid && isSubmitted && !isErrorForManditoryVisible && (
         <p className="text-destructive -mt-1.5">{field.errorMessage}</p>
