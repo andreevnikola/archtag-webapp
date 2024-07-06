@@ -30,9 +30,9 @@ export function CustomModal() {
   };
 
   return (
-    <Dialog onOpenChange={manageOnFakeStateOfIsOpenedChange}>
-      <DialogTrigger ref={triggerer} className="hidden"></DialogTrigger>
-      <DialogContent className={className}>{content}</DialogContent>
-    </Dialog>
+      <Dialog onOpenChange={manageOnFakeStateOfIsOpenedChange}>
+        <DialogTrigger ref={triggerer} className="hidden"></DialogTrigger>
+        <DialogContent className={className}>{content}</DialogContent>
+      </Dialog>
   );
 }
