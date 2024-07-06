@@ -1,9 +1,8 @@
-import { ButtonTypes } from "@/lib/config";
 import { FormEvent, useState, useEffect } from "react";
+import { ButtonTypes } from "@/lib/config";
 import CustomFormButton from "./CustomFormButton";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { Button } from "@/components/ui/button";
-//@ts-ignore
 import { ErrorComponent, Link } from "@tanstack/react-router";
 import CustomInputField from "./CustomInputField";
 
@@ -54,14 +53,14 @@ export interface Field {
   transform?: (value: any) => any;
 }
 
-interface ILink {
-  text: string;
-  href: string;
-}
-
 export interface FieldGroup {
   name: string;
   fields: Field[];
+}
+
+interface ILink {
+  text: string;
+  href: string;
 }
 
 interface CustomFormProps<ReturnType> {
@@ -81,12 +80,27 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState(new Map<string, string>());
   const [formData, setFormData] = useState<Partial<ReturnType>>({});
+  const [isFormDirty, setIsFormDirty] = useState(false);
 
   useEffect(() => {
     if (props.initialData) {
       setFormData(props.initialData);
     }
   }, [props.initialData]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isFormDirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isFormDirty]);
 
   const addError = (instanceName: string) =>
     setErrors((map) => {
@@ -102,10 +116,12 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
     });
 
   const handleChange = (name: string, value: any) => {
+    setIsFormDirty(true);
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleFileChange = (name: string, files: FileList | null) => {
+    setIsFormDirty(true);
     if (files && files.length > 0) {
       setFormData((prevData) => ({ ...prevData, [name]: files[0] }));
     }
@@ -116,8 +132,10 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
 
     if (!isSubmitted) setIsSubmitted(true);
 
-    if (Object.keys(formData).length !== 0)
+    if (Object.keys(formData).length !== 0) {
+      setIsFormDirty(false);
       props.onSubmit(formData as ReturnType);
+    }
   };
 
   return (
@@ -144,10 +162,10 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
       )}
 
       {props.fields.map((field) => {
-        if (field.hasOwnProperty("fields")) {
+        if ('fields' in field) {
           return (
             <div className="flex gap-2 w-full" key={field.name}>
-              {(field as FieldGroup).fields.map((subField) => (
+              {field.fields.map((subField) => (
                 <CustomInputField
                   isSubmitted={isSubmitted}
                   key={subField.name}
@@ -155,7 +173,7 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
                   addError={addError}
                   removeError={removeError}
                   //@ts-ignore
-                  value={formData[subField.name] || ""}
+                  value={formData[subField.name] || subField.defaultValue || ""}
                   defaultValue={subField.defaultValue}
                   onChange={handleChange}
                   onFileChange={handleFileChange}
@@ -172,7 +190,7 @@ export function CustomForm<ReturnType>(props: CustomFormProps<ReturnType>) {
             addError={addError}
             removeError={removeError}
             //@ts-ignore
-            value={formData[(field as Field).name] || ""}
+            value={formData[field.name] || field.defaultValue || ""}
             onChange={handleChange}
             onFileChange={handleFileChange}
           />
