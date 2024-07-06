@@ -10,7 +10,7 @@ export function InaccountProfilePicture() {
         <Avatar className="p-0 m-0">
           <AvatarImage
             src={profilePictureUrl}
-            className="rounded-full aspect-square"
+            className="rounded-full aspect-square w-full"
           />
           <AvatarFallback>
             <img

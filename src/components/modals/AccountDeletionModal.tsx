@@ -26,7 +26,7 @@ const AccountDeletionModalFormFields: Array<Field | FieldGroup> = [
 
 export function AccountDeletionModal() {
   const accountDeletionReq = Request.builder<IAccountDeletionModalForm, any>()
-    .url("/auth/delete-account")
+    .url("/user/delete-account")
     .method("POST")
     .useNotificatonErrorHandler()
     .authenticatedRequest()

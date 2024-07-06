@@ -24,7 +24,7 @@ export function Messages() {
   //  }, []);
 
   return (
-    <motion.div className="fixed right-0 bottom-0 p-2 flex flex-col gap-1.5">
+    <motion.div className="fixed right-0 bottom-0 p-2 flex flex-col gap-1.5 z-[1000000]">
       <AnimatePresence>
         {messages.map((msg, i) => (
           <motion.span
@@ -39,10 +39,10 @@ export function Messages() {
               variant={"default"}
               className={
                 msg.type === "error"
-                  ? "border-destructive bg-destructive-transparent-50"
+                  ? "border-destructive bg-destructive-transparent-50 z-[1000000]"
                   : msg.type === "success"
-                    ? "border-success bg-success-transparent-50"
-                    : "border-primary bg-muted-transparent-50"
+                    ? "border-success bg-success-transparent-50 z-[1000000]"
+                    : "border-primary bg-muted-transparent-50 z-[1000000]"
               }
             >
               <FontAwesomeIcon
