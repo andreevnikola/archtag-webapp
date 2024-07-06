@@ -7,7 +7,9 @@ import { useUser } from "@/lib/hooks/useUser";
 export function Header() {
   const router = useRouterState();
 
-  if (!isAuthenticated()) return <UnauthenticatedHeader />;
-
-  return <AuthenticatedHeader />;
+  return (
+    <div style={{position: 'fixed', zIndex: 100}}>
+      {isAuthenticated() ? <AuthenticatedHeader /> : <UnauthenticatedHeader />}
+    </div>
+  );
 }
