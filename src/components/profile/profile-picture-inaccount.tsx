@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { useRef } from "react";
 
+//useless comment
+
 export function InaccountProfilePicture() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
