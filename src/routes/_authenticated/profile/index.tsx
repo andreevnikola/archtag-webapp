@@ -9,6 +9,7 @@ import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ModalController } from "@/components/lib/modal/ModalController";
 import { AccountDeletionModal } from "@/components/modals/AccountDeletionModal";
+import { ProfileResetPassword } from "@/components/profile/profile-reset-password";
 
 export const Route = createFileRoute("/_authenticated/profile/")({
   component: ProfilePage,
@@ -42,14 +43,17 @@ function ProfilePage() {
   };
 
   return (
-    <Holder className="p-2">
-      <div className="centered-container relative">
+    <Holder className="p-2 max-sm:pt-28">
+      <div className="centered-container relative z-20">
         <InaccountProfilePicture />
         <h2 className="text-4xl w-full text-center font-semibold z-20 mt-5">
           Твоят профил
         </h2>
 
-        <div className="flex w-full sm:min-w-96 max-sm:flex-col flex-row gap-1.5">
+        <div className="flex flex-row max-md:flex-col gap-3">
+          <ProfileResetPassword />
+        </div>
+        <div className="flex w-full sm:min-w-96 max-sm:flex-col flex-row gap-1.5 z-0">
           <ButtonWithLoader
             variant={"destructive"}
             className="w-full"

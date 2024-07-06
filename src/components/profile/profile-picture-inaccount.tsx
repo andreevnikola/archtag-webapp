@@ -5,7 +5,7 @@ export function InaccountProfilePicture() {
   const { profilePictureUrl } = useUser();
 
   return (
-    <div className="w-full flex py-2 flex-col justify-center items-center absolute left-0 top-0 -translate-y-1/2">
+    <div className="w-full -z-10 flex py-2 flex-col justify-center items-center absolute left-0 top-0 -translate-y-1/2">
       <div className="w-fit aspect-square max-w-52">
         <Avatar className="p-0 m-0">
           <AvatarImage
