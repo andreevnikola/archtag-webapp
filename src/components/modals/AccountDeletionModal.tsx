@@ -8,6 +8,9 @@ import {
 } from "../lib/form/CustomForm";
 import { faTrashArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { Request } from "@/lib/requestr";
+import { sign } from "crypto";
+import { signOut } from "@/lib/utils/authenticationUtils";
+import { useNavigate } from "@tanstack/react-router";
 
 interface IAccountDeletionModalForm {
   password: string;
@@ -32,9 +35,20 @@ export function AccountDeletionModal() {
     .authenticatedRequest()
     .useRequestr();
 
-  const handleAccoutDeletion = (data: IAccountDeletionModalForm) => {
-    accountDeletionReq.send({
+  const navigate = useNavigate();
+
+  const handleAccoutDeletion = async (data: IAccountDeletionModalForm) => {
+    const resp = await accountDeletionReq.send({
       body: data,
+    });
+
+    if (resp.error) return;
+
+    alert("Акаунтът Ви беше изтрит успешно!");
+    signOut();
+
+    navigate({
+      to: "/auth/signin",
     });
   };
 

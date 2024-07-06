@@ -32,46 +32,39 @@ function ProfilePage() {
       .show();
 
     return;
+  };
 
-    const req = Request.builder()
-      .url("/user/delete-account")
-      .authenticatedRequest()
-      .method("POST")
-      .useNotificatonErrorHandler()
-      .authenticatedRequest()
-      .build();
-
-    const { error } = await req.send();
-
-    if (!error) {
-      signOut();
-      navigate({
-        to: "/",
-      });
-    } else {
-      setIsDeletingAccount(false);
-    }
+  const handleSignOut = async () => {
+    signOut();
+    navigate({
+      to: "/auth/signin",
+    });
   };
 
   return (
-    <Holder>
-      <div className="centered-container">
-        <h2 className="text-4xl w-full text-center font-semibold">
+    <Holder className="p-2">
+      <div className="centered-container relative">
+        <InaccountProfilePicture />
+        <h2 className="text-4xl w-full text-center font-semibold z-20 mt-5">
           Твоят профил
         </h2>
 
-        <InaccountProfilePicture />
-
-        <div className="flex flex-col gap-1.5">
-          <Button className="min-w-96">Запази промените</Button>
+        <div className="flex w-full sm:min-w-96 max-sm:flex-col flex-row gap-1.5">
           <ButtonWithLoader
             variant={"destructive"}
-            className="min-w-96"
+            className="w-full"
             isLoading={isDeletingAccount}
             onClick={() => handleDeleteAccount()}
           >
             Изтрий акаунта
           </ButtonWithLoader>
+          <Button
+            className="w-full"
+            variant={"outline"}
+            onClick={handleSignOut}
+          >
+            Изход{" "}
+          </Button>
         </div>
       </div>
     </Holder>
