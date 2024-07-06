@@ -83,11 +83,11 @@ export function InaccountProfilePicture() {
             <>
               <FontAwesomeIcon
                 icon={faSpinner}
-                className="text-white transition-all opacity-0 group-hover:opacity-100"
+                className="text-white transition-all0 opacity-100"
                 size="3x"
                 spin
               />
-              <p className="text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-all">
+              <p className="text-white text-xs font-semibold opacity-100 transition-all">
                 Качва се...
               </p>
             </>
