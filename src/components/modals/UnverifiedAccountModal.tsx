@@ -10,6 +10,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useCustomModalStore } from "@/stores/CustomModalStore";
 import { useAuthenticationStore } from "@/stores/AuthenticationStore";
 import { Request } from "@/lib/requestr";
+import { ModalController } from "../lib/modal/ModalController";
 
 const resendVerificationRequest = (token: string) =>
   Request.builder<{}, { success: boolean; message?: string }>()
@@ -33,6 +34,7 @@ export function UnverifiedAccountModal() {
 
   const handleSignOut = () => {
     signOut();
+    ModalController.instanciate().hide();
     navigate({ to: "/auth/signin" });
     hideModal();
   };

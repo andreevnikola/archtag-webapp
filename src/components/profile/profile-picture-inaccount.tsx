@@ -7,8 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { useRef } from "react";
 
-//useless comment
-
 export function InaccountProfilePicture() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -85,7 +83,7 @@ export function InaccountProfilePicture() {
             <>
               <FontAwesomeIcon
                 icon={faSpinner}
-                className="text-white transition-all0 opacity-100"
+                className="text-white transition-all opacity-100"
                 size="3x"
                 spin
               />

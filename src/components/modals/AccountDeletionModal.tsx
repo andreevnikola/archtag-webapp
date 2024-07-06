@@ -11,6 +11,7 @@ import { Request } from "@/lib/requestr";
 import { sign } from "crypto";
 import { signOut } from "@/lib/utils/authenticationUtils";
 import { useNavigate } from "@tanstack/react-router";
+import { ModalController } from "../lib/modal/ModalController";
 
 interface IAccountDeletionModalForm {
   password: string;
@@ -22,7 +23,7 @@ const AccountDeletionModalFormFields: Array<Field | FieldGroup> = [
     type: "password",
     title: "Парола",
     placeholder: "********",
-    validation: (value: string) => value.length > 6,
+    validation: (value: string) => value.length > 5,
     errorMessage: "Моля въведете валидна парола!",
   },
 ];
@@ -46,6 +47,8 @@ export function AccountDeletionModal() {
 
     alert("Акаунтът Ви беше изтрит успешно!");
     signOut();
+
+    ModalController.instanciate().hide();
 
     navigate({
       to: "/auth/signin",

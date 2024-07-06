@@ -15,9 +15,15 @@ export function CustomModal() {
   const triggerer = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
+    console.log("useEffect");
     if (isOpen) {
       hasBeenOpened.current = true;
       triggerer.current!.click();
+    } else {
+      if (hasBeenOpened.current) {
+        console.log("closing");
+        triggerer.current!.click();
+      }
     }
   }, [isOpen]);
 
