@@ -40,9 +40,7 @@ export const Route = createFileRoute("/_authenticated")({
           from: window.location.pathname,
         },
       });
-    }
-
-    if (!isEmailValidated()) {
+    } else if (!isEmailValidated()) {
       ModalController.instanciate()
         .setContent(<UnverifiedAccountModal />)
         .setCanClose(false)

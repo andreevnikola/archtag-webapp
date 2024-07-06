@@ -23,6 +23,7 @@ const resendVerificationRequest = (token: string) =>
     .build();
 
 export function UnverifiedAccountModal() {
+  console.log("UnverifiedAccountModal");
   const user = useUser();
   const navigate = useNavigate();
   const hideModal = useCustomModalStore((state) => state.close);

@@ -7,6 +7,7 @@ import { revalidateToken } from "../utils/authenticationUtils";
 import { CustomModal } from "@/components/lib/modal/CustomModal";
 import { ModalController } from "@/components/lib/modal/ModalController";
 import { ServerErrorModal } from "@/components/modals/ServerErrorModal";
+import { useCustomModalStore } from "@/stores/CustomModalStore";
 
 export type RestMethods = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -148,6 +149,7 @@ export class Request<Body, Ret> {
         .setContent(ServerErrorModal())
         .setCanClose(false)
         .setClassName("border border-destructive rounded-lg")
+        .blockContent()
         .show();
       return {
         res: null,
