@@ -1,3 +1,4 @@
+import { Message, useMessageStore } from "@/stores/MessageStore";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -16,4 +17,8 @@ export function getSignInPathWithRedirect() {
       from: window.location.pathname,
     },
   };
+}
+
+export function pushMessage(message: Message) {
+  useMessageStore.getState().push(message);
 }

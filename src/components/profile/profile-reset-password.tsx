@@ -6,6 +6,7 @@ import {
   FieldGroup,
 } from "../lib/form/CustomForm";
 import { useUser } from "@/lib/hooks/useUser";
+import { pushMessage } from "@/lib/utils/utils";
 
 interface IProfileResetPasswordForm {
   oldPassword: string;
@@ -52,7 +53,10 @@ export function ProfileResetPassword() {
 
     if (resp.error) return;
 
-    alert("Паролата Ви беше променена успешно!");
+    pushMessage({
+      title: "Вашата парола беше успешно променена.",
+      type: "success",
+    });
   };
 
   return (

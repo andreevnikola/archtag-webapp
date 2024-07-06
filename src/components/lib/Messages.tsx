@@ -46,7 +46,7 @@ export function Messages() {
               }
             >
               <FontAwesomeIcon
-                className="w-4 h-4"
+                className="w-[18px] h-[18px] translate-y-[1px]"
                 icon={
                   msg.type === "error"
                     ? faTriangleExclamation
@@ -55,7 +55,9 @@ export function Messages() {
                       : faBell
                 }
               />
-              <AlertTitle>{msg.title}</AlertTitle>
+              <AlertTitle className="text-lg font-semibold -mb-0.5">
+                {msg.title}
+              </AlertTitle>
               <AlertDescription>{msg.message}</AlertDescription>
             </Alert>
           </motion.span>

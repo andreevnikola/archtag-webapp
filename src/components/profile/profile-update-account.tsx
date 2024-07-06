@@ -6,6 +6,7 @@ import {
   FieldGroup,
 } from "../lib/form/CustomForm";
 import { useUser } from "@/lib/hooks/useUser";
+import { pushMessage } from "@/lib/utils/utils";
 
 interface IProfileUpdateAccountForm {
   firstName: string;
@@ -54,7 +55,11 @@ export function ProfileUpdateAccountComponent() {
 
     if (resp.error) return;
 
-    alert("Промените бяха успешно запазени!");
+    pushMessage({
+      message: "Всички промени бяха успешно запазени.",
+      type: "success",
+      title: "Операцията беше успешна!",
+    });
   };
 
   return (
@@ -75,7 +80,7 @@ export function ProfileUpdateAccountComponent() {
         }}
         isLoading={isLoading}
         submitButtonType={ButtonCustomizationType.CUSTOM_TEXT}
-      />
+      />{" "}
     </div>
   );
 }

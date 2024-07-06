@@ -4,7 +4,7 @@ type MessageType = "error" | "success" | "message";
 
 export interface Message {
   title: string;
-  message: string;
+  message?: string;
   type: MessageType;
 }
 
