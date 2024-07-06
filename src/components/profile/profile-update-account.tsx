@@ -47,7 +47,7 @@ export function ProfileUpdateAccountComponent() {
     const resp = await send({
       body: {
         firstname: data.firstName,
-        currentPassword: data.lastName,
+        lastname: data.lastName,
         email: email,
       },
     });
