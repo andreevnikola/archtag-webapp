@@ -4,6 +4,9 @@ import { useRequestr } from "../hooks/requestr-hook";
 import consoleErrorHandler from "./error-handlers/consoleErrorHandler";
 import notificationErrorHandler from "./error-handlers/notificationErrorHandler";
 import { revalidateToken } from "../utils/authenticationUtils";
+import { CustomModal } from "@/components/lib/modal/CustomModal";
+import { ModalController } from "@/components/lib/modal/ModalController";
+import { ServerErrorModal } from "@/components/modals/ServerErrorModal";
 
 export type RestMethods = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -114,11 +117,46 @@ export class Request<Body, Ret> {
     res: Ret | null;
     error: ReqError | null;
   }> {
-    const response = await fetch(this.url, {
-      method: this.method,
-      headers: this.headers,
-      body: this.body,
-    });
+    let response = null;
+
+    try {
+      response = await fetch(this.url, {
+        method: this.method,
+        headers: this.headers,
+        body: this.body,
+      });
+    } catch (e) {
+      console.log("Error in request", this.url);
+      console.log(e);
+      if (this.retries > 0) {
+        console.log(this.retries);
+        this.retries -= this.retries;
+        return await this.send();
+      }
+      notificationErrorHandler({
+        status: 500,
+        message: "Нещо се обърка!",
+        request: this,
+      });
+      if (this.errorHandler !== notificationErrorHandler)
+        this.errorHandler({
+          status: 500,
+          message: "Нещо се обърка!",
+          request: this,
+        });
+      ModalController.instanciate()
+        .setContent(ServerErrorModal())
+        .setCanClose(false)
+        .setClassName("border border-destructive rounded-lg")
+        .show();
+      return {
+        res: null,
+        error: {
+          status: 500,
+          message: "Нещо се обърка!",
+        },
+      };
+    }
 
     let data = null;
 

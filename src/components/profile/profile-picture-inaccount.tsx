@@ -6,7 +6,7 @@ export function InaccountProfilePicture() {
 
   return (
     <div className="w-full flex py-2 flex-col justify-center items-center">
-      <div className="w-full aspect-square max-w-xs">
+      <div className="w-fit aspect-square max-w-xs">
         <Avatar className="p-0 m-0">
           <AvatarImage
             src={profilePictureUrl}

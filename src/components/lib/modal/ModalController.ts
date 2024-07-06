@@ -34,6 +34,11 @@ export class ModalController {
     return this;
   }
 
+  setClassName(className: string) {
+    useCustomModalStore.getState().className = className;
+    return this;
+  }
+
   onClose(callback: () => void) {
     useCustomModalStore.getState().onClose = callback;
     return this;

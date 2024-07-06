@@ -8,6 +8,7 @@ export function CustomModal() {
   const content = useCustomModalStore((state) => state.content);
   const canClose = useCustomModalStore((state) => state.canClose);
   const close = useCustomModalStore((state) => state.close);
+  const className = useCustomModalStore((state) => state.className);
 
   const hasBeenOpened = useRef(false);
 
@@ -21,7 +22,6 @@ export function CustomModal() {
   }, [isOpen]);
 
   const manageOnFakeStateOfIsOpenedChange = (isFakeOpened: boolean) => {
-    console.log("isFakeOpen: " + isFakeOpened);
     if (!isFakeOpened && canClose) {
       if (onClose) onClose();
       close();
@@ -32,7 +32,7 @@ export function CustomModal() {
   return (
     <Dialog onOpenChange={manageOnFakeStateOfIsOpenedChange}>
       <DialogTrigger ref={triggerer} className="hidden"></DialogTrigger>
-      <DialogContent>{content}</DialogContent>
+      <DialogContent className={className}>{content}</DialogContent>
     </Dialog>
   );
 }

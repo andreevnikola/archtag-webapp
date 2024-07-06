@@ -7,6 +7,7 @@ export interface CustomModalProps {
   open: () => void;
   close: () => void;
   setContent: (content: React.ReactNode) => void;
+  className: string;
 }
 
 export interface CustomModal extends CustomModalProps {
@@ -17,6 +18,7 @@ export const useCustomModalStore = create<CustomModal>((set) => ({
   isOpen: false,
   content: null,
   canClose: false,
+  className: "",
   onClose: () => {},
   setContent: (content: React.ReactNode) => set({ content }),
   open: () => set({ isOpen: true }),

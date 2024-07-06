@@ -45,20 +45,22 @@ export function AccountDeletionModal() {
           Изтриване на акаунт
         </DialogTitle>
         <br />
-        <CustomForm<IAccountDeletionModalForm>
-          fields={AccountDeletionModalFormFields}
-          submitButtonType={ButtonCustomizationType.CUSTOM_TEXT_AND_ICON}
-          isLoading={accountDeletionReq.isLoading}
-          submitButton={{
-            text: "Изтрий акаунт",
-            variant: "destructive",
-            icon: faTrashArrowUp,
-            customStyle: { width: "100%" },
-          }}
-          onSubmit={(data: IAccountDeletionModalForm) =>
-            handleAccoutDeletion(data)
-          }
-        />
+        <span className="text-left">
+          <CustomForm<IAccountDeletionModalForm>
+            fields={AccountDeletionModalFormFields}
+            submitButtonType={ButtonCustomizationType.CUSTOM_TEXT_AND_ICON}
+            isLoading={accountDeletionReq.isLoading}
+            submitButton={{
+              text: "Изтрий акаунт",
+              variant: "destructive",
+              icon: faTrashArrowUp,
+              customStyle: { width: "100%" },
+            }}
+            onSubmit={(data: IAccountDeletionModalForm) =>
+              handleAccoutDeletion(data)
+            }
+          />
+        </span>
       </DialogHeader>
     </>
   );
